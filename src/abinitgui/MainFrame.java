@@ -273,8 +273,7 @@ public class MainFrame extends javax.swing.JFrame {
          * End of script section *
          */
         projectManager = new ProjectManager(this);
-        
-        projectManager.setVisible(true);
+        projectManager.setVisible(false);
         
         // Default values
         RemoteJob remoteJob = new RemoteJob();
@@ -291,9 +290,10 @@ public class MainFrame extends javax.swing.JFrame {
         inputEditor = new InputEditor(this);
         submitScriptFrame = new SubmissionScriptFrame(this);
 
-        testAnalyze.setVisible(true);
+        testAnalyze.setVisible(false);
         editPYDFT.setVisible(false);
         jMenuClustepAndTB.setVisible(false);
+        localAbinitRadioButton.setVisible(false);
 
         useExtIFRadioButtonActionPerformed(null);
 
@@ -708,7 +708,6 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        abipyPathTextField.setText("/home/naps/ygillet/MAPR2451-v2/7.3.1-public/abipy-0.1.0.dev");
         abipyPathTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 abipyPathTextFieldActionPerformed(evt);
@@ -2985,7 +2984,7 @@ public class MainFrame extends javax.swing.JFrame {
                             String scriptFileR = rootPath + "/" + inputFolder + "/" + scriptFile;
                             putFile(scriptFile + " " + scriptFileR);
 
-                            String cmd = "python " + scriptFileR + " " + inputFileR;
+                            String cmd = "PYTHONPATH=\""+abipyPathTextField.getText()+"\":$PYTHONPATH python " + scriptFileR + " " + inputFileR;
 
                             sendCommand(cmd);
 
@@ -3449,6 +3448,9 @@ public class MainFrame extends javax.swing.JFrame {
         tmpvar = abinitPathTextField.getText();
         conf.setAttr(congfiguration, "abinitpath", "path", tmpvar);
         //**********************************************************************
+        tmpvar = abipyPathTextField.getText();
+        conf.setAttr(congfiguration, "abipypath", "path", tmpvar);
+        //**********************************************************************
         tmpvar = openFileTextField.getText();
         conf.setAttr(congfiguration, "openfile", "file", tmpvar);
         //**********************************************************************
@@ -3584,6 +3586,8 @@ public class MainFrame extends javax.swing.JFrame {
                                 pspPathTextField.setText(attrValue);
                             } else if (elemName.equals("abinitpath")) {
                                 abinitPathTextField.setText(attrValue);
+                            } else if (elemName.equals("abipypath")) {
+                                abipyPathTextField.setText(attrValue);
                             } else if (elemName.equals("openfile")) {
                                 openFileTextField.setText(attrValue);
                             } else if (elemName.equals("psp")) {

@@ -10,11 +10,10 @@ def bandstructure(inputFile,outputFile,title,backend):
     matplotlib.use(backend);
     import matplotlib.pyplot as plt;
 
-    fig = plt.figure();
     ebands = abipy.ebands.ElectronBands.from_ncfile(inputFile)
 
-    ebands.plot(title=title,fig=fig,klabels={(0.0,0.0,0.0) : "$\Gamma$", (0.5,0.0,0.0) : "L", (0.5,0.5,0.0) : "X", (0.25,0.25,0.0) : "Y"})
-    
+    fig = ebands.plot(title=title,klabels={(0.0,0.0,0.0) : "$\Gamma$", (0.5,0.0,0.0) : "L", (0.5,0.5,0.0) : "X", (0.25,0.25,0.0) : "Y"})
+
     fig.savefig(outputFile);
 
     plt.close(fig)

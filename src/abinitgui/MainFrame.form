@@ -668,9 +668,6 @@
               </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="abipyPathTextField">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="/home/naps/ygillet/MAPR2451-v2/7.3.1-public/abipy-0.1.0.dev"/>
-              </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="abipyPathTextFieldActionPerformed"/>
               </Events>

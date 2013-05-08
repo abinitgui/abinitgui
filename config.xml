@@ -15,6 +15,7 @@
     <mySimulationspath path="./MySims" />
     <psppath path="./PSP" />
     <abinitpath path="/home/naps/ygillet/MAPR2451-v2/7.3.1-public/build/src/98_main/" />
+    <abipypath path="/home/naps/ygillet/MAPR2451-v2/7.3.1-public/abipy-0.1.0.dev" />
     <openfile file="./test3.in" />
     <psp psp="3" />
     <psptable>

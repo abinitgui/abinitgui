@@ -10,12 +10,11 @@ def dos(inputFile,outputFile,title,backend,method,step,width):
     matplotlib.use(backend);
     import matplotlib.pyplot as plt;
 
-    fig = plt.figure();
     ebands = abipy.ebands.ElectronBands.from_ncfile(inputFile)
 
     dos = ebands.get_dos(method=method, step=float(step), width=float(width));
 
-    dos.plot(title=title, fig=fig)
+    dos.plot(title=title)
     
     fig.savefig(outputFile);
 
