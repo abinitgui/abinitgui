@@ -14,11 +14,7 @@ def dos(inputFile,outputFile,title,backend,method,step,width):
 
     dos = ebands.get_dos(method=method, step=float(step), width=float(width));
 
-    dos.plot(title=title)
-    
-    fig.savefig(outputFile);
-
-    plt.close(fig);
+    fig=dos.plot(title=title,show=True,savefig=outputFile)
 
 def usage():
     """usage de la ligne de commande"""

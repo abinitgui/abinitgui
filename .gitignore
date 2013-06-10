@@ -2,3 +2,4 @@
 standalone
 !/standalone/
 /build/
+config.xml

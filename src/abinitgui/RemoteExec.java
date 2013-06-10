@@ -244,12 +244,15 @@ public class RemoteExec {
                         //mainFrame.printDEB("Exit-status: " + channel.getExitStatus());
                         int retCode = channel.getExitStatus();
                         if (retCode != 0) {
-                            // TODO faire une boucle si besoin est
-                            int i = err.read(tmp, 0, 1024);
-                            if (i < 0) {
-                                return new RetMSG(-2, "Error in reading the input error stream", CMD);
+                            errorMSG = "";
+                            while(true) {
+                                int i = err.read(tmp, 0, tmp.length);
+                                if (i < 0) {
+                                    break;
+                                }
+                                errorMSG += new String(tmp,0,i);
                             }
-                            return new RetMSG(retCode, new String(tmp, 0, i), CMD);
+                            return new RetMSG(retCode, errorMSG, CMD);
                         }
                         return new RetMSG(retCode, succesMSG, CMD);
                     }

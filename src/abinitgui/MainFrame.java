@@ -294,6 +294,8 @@ public class MainFrame extends javax.swing.JFrame {
         editPYDFT.setVisible(false);
         jMenuClustepAndTB.setVisible(false);
         localAbinitRadioButton.setVisible(false);
+        abipyPathPathLabel.setVisible(false);
+        abipyPathTextField.setVisible(false);
 
         useExtIFRadioButtonActionPerformed(null);
 
@@ -467,16 +469,16 @@ public class MainFrame extends javax.swing.JFrame {
         scriptDescription = new javax.swing.JTextArea();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        scriptArgTable = new javax.swing.JTable();
+        scriptArgTable = new ScriptTable();
         launchScript = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        scriptOutTable = new javax.swing.JTable();
+        scriptOutTable = new ScriptTable();
         jLabel6 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         scriptProgram = new javax.swing.JTextField();
         openOutput = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
-        scriptInputTable = new javax.swing.JTable();
+        scriptInputTable = new ScriptTable();
         jLabel10 = new javax.swing.JLabel();
         editScripts = new javax.swing.JButton();
         reloadScripts = new javax.swing.JButton();
@@ -2652,7 +2654,9 @@ public class MainFrame extends javax.swing.JFrame {
                             // TODO Util.dos2unix(new File(inputFileR)); // Transformer avant d'envoyer le fichier
                         }
                     }
-                    String command = "PYTHONPATH=\""+abipyPathTextField.getText()+"\":$PYTHONPATH "+program + " " + inputFileR;
+                    // "PYTHONPATH=\""+abipyPathTextField.getText()+"\":$PYTHONPATH "+
+                    
+                    String command = program + " " + inputFileR;
 
                     ArrayList<ScriptArgument> listInput = scr.listInput;
 
@@ -2984,7 +2988,8 @@ public class MainFrame extends javax.swing.JFrame {
                             String scriptFileR = rootPath + "/" + inputFolder + "/" + scriptFile;
                             putFile(scriptFile + " " + scriptFileR);
 
-                            String cmd = "PYTHONPATH=\""+abipyPathTextField.getText()+"\":$PYTHONPATH python " + scriptFileR + " " + inputFileR;
+                            // "PYTHONPATH=\""+abipyPathTextField.getText()+"\":$PYTHONPATH 
+                            String cmd = "python " + scriptFileR + " " + inputFileR;
 
                             sendCommand(cmd);
 

@@ -46,7 +46,19 @@ For more information on the Abinit Project, please see
 
 package abinitgui;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import javax.swing.AbstractCellEditor;
+import javax.swing.BorderFactory;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFileChooser;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.TableCellEditor;
 
 public class ScriptTable extends JTable
@@ -54,6 +66,118 @@ public class ScriptTable extends JTable
     @Override
     public TableCellEditor getCellEditor(int row, int column)
     {
+        ScriptArgument arg = (ScriptArgument)(getModel().getValueAt(row,0));
+        
+//        if(arg.type.toUpperCase().equals("INPUTFILE"))
+//        {
+//            return new FileEditor();
+//        }
+//        else if(arg.type.toUpperCase().equals("BOOLEAN"))
+//        {
+//            return new BooleanEditor();
+//        }
+        
         return getDefaultEditor(getModel().getValueAt(row, column).getClass());
     }
+    
+    private class BooleanEditor extends AbstractCellEditor
+        implements TableCellEditor,
+        ActionListener
+    {
+        private JButton but;
+        private String status;
+        private boolean stat;
+        
+        public BooleanEditor()
+        {
+            but = new JButton();
+            but.addActionListener(this);
+            but.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+            but.setBackground(Color.darkGray);
+        }
+        
+        @Override
+        public Object getCellEditorValue()
+        {
+            return status;
+        }
+
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+            
+            status = (String)value;
+            stat = (status.equals("yes"));
+            return but;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) 
+        {
+            stat = !stat;
+            
+            if(stat)
+            {
+                status = "yes";
+            }
+            else
+            {
+                status = "no";
+            }
+            
+            fireEditingStopped();
+        }
+    }
+    
+    private class FileEditor extends AbstractCellEditor
+        implements TableCellEditor,
+        ActionListener
+    {
+        private JButton but;
+        private String fileName;
+                
+        public FileEditor()
+        {
+            but = new JButton();
+            but.addActionListener(this);
+            but.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+            but.setBackground(Color.darkGray);
+        }
+
+        @Override
+        public Component getTableCellEditorComponent(JTable table,
+                Object value,
+                boolean isSelected,
+                int row,
+                int column) {
+            fileName = (String)value;
+            //button.setText(currentAtom.getSymbol());
+            return but;
+        }
+
+        @Override
+        public Object getCellEditorValue() {
+            return fileName;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            
+            JFileChooser fc = new JFileChooser();
+            
+            int returnVal = fc.showOpenDialog(ScriptTable.this);
+
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                File file = fc.getSelectedFile();
+                //This is where a real application would open the file.
+                System.out.println("Opening: " + file.getName() + ".");
+                this.fileName = file.getName();
+            } else {
+                System.out.println("Open command cancelled by user.");
+            }
+            
+            fireEditingStopped();
+        }
+
+    }
+
 }

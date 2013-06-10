@@ -51,15 +51,17 @@ public class ScriptArgument {
     public String name;
     public String help;
     public String value;
+    public String type;
 
     public ScriptArgument() {
         this.name = null;
         this.help = null;
         this.value = null;
+        this.type = null;
     }
 
     @Override
     public String toString() {
-        return name + " (" + help + ") = " + value;
+        return name + " (" + help + ") [" + type + "] = " + value;
     }
 }

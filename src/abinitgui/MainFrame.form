@@ -1429,6 +1429,9 @@
                           <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                         </Property>
                       </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ScriptTable()"/>
+                      </AuxValues>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -1459,6 +1462,9 @@
                           <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                         </Property>
                       </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ScriptTable()"/>
+                      </AuxValues>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -1507,6 +1513,9 @@
                           <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                         </Property>
                       </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ScriptTable()"/>
+                      </AuxValues>
                     </Component>
                   </SubComponents>
                 </Container>
