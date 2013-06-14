@@ -136,12 +136,20 @@ class ScriptTableModel extends AbstractTableModel {
 
     void addScript(ScriptArgument data) {
         this.data.add(data);
+        if (table.isEditing())
+        {
+            table.getCellEditor().cancelCellEditing();
+        }   
         this.table.updateUI();
     }
     
     void resetScripts()
     {
         this.data.clear();
+        if (table.isEditing())
+        {
+            table.getCellEditor().cancelCellEditing();
+        }   
         this.table.updateUI();
     }
 }

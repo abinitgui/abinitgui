@@ -111,6 +111,8 @@ public class ScriptBib {
                                         arg.help = attrValue;
                                     } else if (elemName3.equals("default")) {
                                         arg.value = attrValue;
+                                    } else if (elemName3.equals("type")) {
+                                        arg.type = attrValue;
                                     }
 
                                 }

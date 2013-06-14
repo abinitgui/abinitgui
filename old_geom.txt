@@ -1,0 +1,99 @@
+{
+"acell":
+	{
+	"default" : "3*1.0",
+	"dim" : [3],
+	"type" : "real",
+	}
+
+"ndtset":
+	{
+	"default" : "0",
+	"type" : "int",
+	"dim" : [],
+	}
+
+"natom":
+	{
+	"default" : "1",
+	"type" : "int",
+	"dim" : [],
+	}
+
+"angdeg":
+	{
+	"default" : "",
+	"type" : "real",
+	"dim" : [3],
+	}
+
+"jdtset":
+	{
+	"default" : "",
+	"type" : "int",
+	"dim" : ["ndtset"],
+	}
+
+"ntypat":
+	{
+	"default" : "1",
+	"type" : "int",
+	"dim" : [],
+	}
+
+"rprim":
+	{
+	"default" : "1 0 0 0 1 0 0 0 1",
+	"type" : "real",
+	"dim" : [3,3],
+	}
+
+"scalecart":
+	{
+	"default" : "3*1",
+	"type" : "real",
+	"dim" : [3],
+	}
+
+"typat":
+	{
+	"default" : "1",
+	"type" : "int",
+	"dim" : ["natom"],
+	}
+
+"udtset":
+	{
+	"default" : "",
+	"type" : "int",
+	"dim" : [2],
+	}
+
+"xangst":
+	{
+	"default" : "",
+	"type" : "real",
+	"dim" : [3,"natom"],
+	}
+
+"xcart":
+	{
+	"default" : "",
+	"type" : "real",
+	"dim" : [3,"natom"],
+	}
+
+"xred":
+	{
+	"default" : "*0.0",
+	"type" : "real",
+	"dim" : [3,"natom"],
+	}
+
+"znucl":
+	{
+	"default" : "",
+	"type" : "int",
+	"dim" : ""
+	}
+}

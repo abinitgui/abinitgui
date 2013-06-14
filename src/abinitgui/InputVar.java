@@ -46,6 +46,7 @@ For more information on the Abinit Project, please see
 
 package abinitgui;
 
+import json.JSONArray;
 import json.JSONObject;
 
 public class InputVar 
@@ -57,6 +58,7 @@ public class InputVar
     public String definition; // Mnemonic or why the variable is named as it is
     public String category; // link to the web page
     public String vartype; // Type of the variable
+    public String dimensions;
 
     public InputVar(String name, JSONObject obj) 
     {
@@ -67,6 +69,7 @@ public class InputVar
         this.definition = obj.getString("definition");
         this.category = obj.getString("category");
         this.vartype = obj.getString("vartype");
+        this.dimensions = obj.get("dimensions").toString();
     }
     
 }

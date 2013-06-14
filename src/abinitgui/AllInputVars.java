@@ -47,6 +47,7 @@ For more information on the Abinit Project, please see
 package abinitgui;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
@@ -76,9 +77,8 @@ public class AllInputVars
     public void loadVars()
     {
         try {
-            BufferedReader br = null;
-            br = new BufferedReader(new FileReader("json_vars.txt"));
-            String s = br.readLine();
+            
+            String s = Utils.fileToString("ABINIT_variables.json");
             JSONObject obj = new JSONObject(s);
             listKeys.clear();
             // Sort names by insertion
@@ -101,7 +101,7 @@ public class AllInputVars
             }
             
         } catch (IOException ex) {
-            mf.printERR("File 'json_vars.txt' does not exist. Help will not be available");
+            mf.printERR("File 'ABINIT_variables.json' does not exist. Help and pre-processing might not be available");
         }
         
     }

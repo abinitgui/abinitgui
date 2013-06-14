@@ -53,33 +53,35 @@ import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import json.JSONArray;
 
 public class AbinitGeometry {
     
     // Fixed sized tables
-    public double acell[] = null;
-    public double scalecart[] = null;
-    public double angdeg[] = null;
-    public double rprim[][] = null;
-    public double rprimd[][] = null;
+    public Double acell[] = null;
+    public Double scalecart[] = null;
+    public Double angdeg[] = null;
+    public Double rprim[][] = null;
+    public Double rprimd[][] = null;
     
     // Varying size table
     public int natom = 0;
-    public int znucl[] = null; // znucl(ntypat)
+    public Double znucl[] = null; // znucl(ntypat)
     
     public int ntypat = 0;
-    public int typat[] = null; // typat(natom)
+    public Integer typat[] = null; // typat(natom)
     
-    public double xangst[][] = null; // xangst(natom,3)
-    public double xred[][] = null; // xred(natom,3)
-    public double xcart[][] = null; // xcart(natom,3)
+    public Double xangst[][] = null; // xangst(natom,3)
+    public Double xred[][] = null; // xred(natom,3)
+    public Double xcart[][] = null; // xcart(natom,3)
     
-    public double allpositions[][] = null; // allpositions(allatoms,3)
+    public Double allpositions[][] = null; // allpositions(allatoms,3)
     public int allatoms;
     
-    public int allznucl[] = null; // allznucl(allatoms)
+    public Double allznucl[] = null; // allznucl(allatoms)
     
     public final List<String> allNames=Arrays.asList("acell","angdeg","natom",
             "ntypat","rprim","rprimd","scalecart","typat","xangst","xred",
@@ -116,7 +118,7 @@ public class AbinitGeometry {
         return ""+val;
     }
     
-    public String printArray(double[] array)
+    public String printArray(Double[] array)
     {
         if(array == null)
         {
@@ -133,7 +135,7 @@ public class AbinitGeometry {
         return s+"]";
     }
     
-    public String printArray(int[] array)
+    public String printArray(Integer[] array)
     {
         if(array == null)
         {
@@ -149,7 +151,7 @@ public class AbinitGeometry {
         return s+"]";
     }
     
-    public String printArray(double[][] array)
+    public String printArray(Double[][] array)
     {
         if(array == null)
         {
@@ -170,7 +172,7 @@ public class AbinitGeometry {
         return s+"]";
     }
     
-    public String printArray(int[][] array)
+    public String printArray(Integer[][] array)
     {
         if(array == null)
         {
@@ -195,19 +197,19 @@ public class AbinitGeometry {
     {
          this.natom = natom;
          this.ntypat = ntypat;
-         this.typat = new int[natom];
+         this.typat = new Integer[natom];
          for(int i = 0; i < natom; i++)
          {
              this.typat[i] = typat.getInt(i);
          }
          
-         this.znucl = new int[ntypat];
+         this.znucl = new Double[ntypat];
          for(int i = 0; i < ntypat; i++)
          {
-             this.znucl[i] = znucl.getInt(i);
+             this.znucl[i] = (double)znucl.getInt(i);
          }
          
-         this.xred = new double[this.natom][3];
+         this.xred = new Double[this.natom][3];
          
          for(int i = 0; i < natom; i++)
          {
@@ -217,7 +219,7 @@ public class AbinitGeometry {
          }
          
          
-         this.rprimd = new double[3][3];
+         this.rprimd = new Double[3][3];
          for(int i = 0; i < 3; i++)
          {
              this.rprimd[i][0] = rprimd.getJSONArray(0).getJSONArray(i).getDouble(0)*ANGSTROMPERBOHR;
@@ -226,6 +228,48 @@ public class AbinitGeometry {
          }
     }
 
+    public void loadData(HashMap<String,Object> map)
+    {
+        Iterator<String> iter = map.keySet().iterator();
+        
+        Object o = map.get("natom");
+        if(o != null) this.natom = (int) o;
+        
+        o = map.get("ntypat");
+        if(o != null) this.ntypat = (int) o;
+        
+        o = map.get("typat");
+        if(o != null) this.typat = (Integer[])o;
+        
+        o = map.get("znucl");
+        if(o != null) this.znucl = (Double[])o;
+        
+        o = map.get("xred");
+        if(o != null) this.xred = (Double[][])o;
+        
+        o = map.get("xcart");
+        if(o != null) this.xcart = (Double[][])o;
+        
+        o = map.get("rprim");
+        if(o != null) this.rprim = (Double[][])o;
+        
+        o = map.get("rprimd");
+        if(o != null) this.rprimd = (Double[][])o;
+        
+        o = map.get("scalecart");
+        if(o != null) this.scalecart = (Double[])o;
+        
+        o = map.get("xangst");
+        if(o != null) this.xangst = (Double[][])o;
+        
+        o = map.get("acell");
+        if(o != null) this.acell = (Double[])o;
+        
+        o = map.get("angdeg");
+        if(o != null) this.angdeg  = (Double[])o;
+        
+
+    }
 
     public boolean fillData() {
         DecimalFormat df_rprim = new DecimalFormat("#0.0000000000000");
@@ -249,24 +293,24 @@ public class AbinitGeometry {
         
         if(rprimd == null)
         {
-            rprimd = new double[3][3];
+            rprimd = new Double[3][3];
             if(acell == null)
             {
-                acell = new double[3];
+                acell = new Double[3];
                 acell[0] = 1 * ANGSTROMPERBOHR;    //in angstrom    
                 acell[1] = 1 * ANGSTROMPERBOHR;
                 acell[2] = 1 * ANGSTROMPERBOHR;
             }
             if(angdeg == null && rprim == null)
             {
-                angdeg = new double[3];
-                angdeg[0] = 90;
-                angdeg[1] = 90;
-                angdeg[2] = 90;
+                angdeg = new Double[3];
+                angdeg[0] = 90D;
+                angdeg[1] = 90D;
+                angdeg[2] = 90D;
             }
             else if(angdeg == null)
             {
-                angdeg = new double[3];
+                angdeg = new Double[3];
                 
                  double dot23 = 0;
                  double dot13 = 0;
@@ -286,7 +330,7 @@ public class AbinitGeometry {
            
             if(rprim == null)
             {
-                rprim = new double[3][3];
+                rprim = new Double[3][3];
                 Double angdeg1 = angdeg[0]; // angdeg(1)
                 Double angdeg2 = angdeg[1]; // angdeg(2)
                 Double angdeg3 = angdeg[2]; // angdeg(3)
@@ -346,10 +390,10 @@ public class AbinitGeometry {
             
             if(scalecart == null)
             {
-                scalecart= new double[3];
-                scalecart[0] = 1;
-                scalecart[1] = 1;
-                scalecart[2] = 1;
+                scalecart= new Double[3];
+                scalecart[0] = 1D;
+                scalecart[1] = 1D;
+                scalecart[2] = 1D;
             }
             
             // Compute rprimd !
@@ -358,16 +402,19 @@ public class AbinitGeometry {
                 for(int j = 0; j < 3; j++)
                 {
                     // Check order of indices
-                    rprimd[i][j] = scalecart[j]*rprim[i][j]*acell[i];
+                    rprimd[i][j] = scalecart[j]*rprim[i][j]*acell[i]*ANGSTROMPERBOHR;
                 }
             }
+            System.out.println(printArray(rprimd));
+            
+            System.out.println(printArray(acell));
         }
         
         
         
         if(xangst == null)
         {
-            xangst = new double[natom][3];
+            xangst = new Double[natom][3];
             if(xcart != null)
             {
                 for(int i = 0; i < natom; i++)
@@ -384,6 +431,7 @@ public class AbinitGeometry {
                 {
                     for(int j = 0; j < 3; j++)
                     {
+                        xangst[i][j] = 0.0D;
                         for(int k = 0; k < 3; k++)
                         {
                             // Should check order of indices
@@ -403,8 +451,8 @@ public class AbinitGeometry {
     {
         allatoms = natom*nbX*nbY*nbZ;
         
-        allpositions = new double[allatoms][3];
-        allznucl = new int[allatoms];
+        allpositions = new Double[allatoms][3];
+        allznucl = new Double[allatoms];
         
         for(int i = 0; i < natom; i++)
         {
@@ -436,7 +484,7 @@ public class AbinitGeometry {
         pw.println(unitcell);
         for(int i = 0; i < allatoms; i++)
         {
-            String s = ""+Atom.getSymbolByZnucl(allznucl[i]);
+            String s = ""+Atom.getSymbolByZnucl((int)(Math.floor(allznucl[i])));
             
             for(int j = 0; j < 3; j++)
             {
@@ -461,6 +509,7 @@ public class AbinitGeometry {
                latticevect += rprimd[i][j]+"\t";
            }
            pw.println(latticevect);
+           System.out.println("Writing inside "+fileName+" latticevect = "+latticevect);
         }
         
         for(int i = 0; i < allatoms; i++)
@@ -472,7 +521,7 @@ public class AbinitGeometry {
                 s = s + " " + allpositions[i][j]+"\t";
             }
             
-            s = s + Atom.getSymbolByZnucl(allznucl[i]);
+            s = s + Atom.getSymbolByZnucl((int)(Math.floor(allznucl[i])));
             
             pw.println(s);
         }

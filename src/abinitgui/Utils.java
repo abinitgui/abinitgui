@@ -46,9 +46,11 @@ For more information on the Abinit Project, please see
 
 package abinitgui;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -191,5 +193,20 @@ public class Utils {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public static String fileToString(String fileName) throws IOException {
+        
+            BufferedReader br = null;
+            br = new BufferedReader(new FileReader(fileName));
+            String line;
+            StringBuilder sb = new StringBuilder();
+            while((line = br.readLine()) != null)
+            {
+                sb.append(line);
+                sb.append(" ");
+            }
+            
+            return sb.toString();
     }
 }

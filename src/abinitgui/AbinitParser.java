@@ -94,14 +94,14 @@ public class AbinitParser {
         nextAbinitInputToken(true);
         while (fieldVal != null) {
           if (fieldVal.equals("acell")) {
-            geom.acell = new double[3];
+            geom.acell = new Double[3];
             for (int i = 0; i < 3; i++) {
               nextAbinitInputToken(false);
               geom.acell[i] = atof(fieldVal)
                 * ANGSTROMPERBOHR;    //in angstrom
             }
           } else if (fieldVal.equals("rprim")) {
-            geom.rprim = new double[3][3];
+            geom.rprim = new Double[3][3];
             for (int i = 0; i < 3; i++) {
               for (int j = 0; j < 3; j++) {
                 nextAbinitInputToken(false);
@@ -109,7 +109,7 @@ public class AbinitParser {
               }
             }
           } else if (fieldVal.equals("rprimd")) {
-            geom.rprimd = new double[3][3];
+            geom.rprimd = new Double[3][3];
             for (int i = 0; i < 3; i++) {
               for (int j = 0; j < 3; j++) {
                 nextAbinitInputToken(false);
@@ -117,13 +117,13 @@ public class AbinitParser {
               }
             }
           } else if (fieldVal.equals("scalecart")) {
-            geom.scalecart = new double[3];
+            geom.scalecart = new Double[3];
             for (int i = 0; i < 3; i++) {
               nextAbinitInputToken(false);
               geom.scalecart[i] = atof(fieldVal);
             }
           } else if (fieldVal.equals("angdeg")) {
-            geom.angdeg = new double[3];
+            geom.angdeg = new Double[3];
             for (int i = 0; i < 3; i++) {
               nextAbinitInputToken(false);
               geom.angdeg[i] = atof(fieldVal);
@@ -142,8 +142,8 @@ public class AbinitParser {
         }
 
         //Initialize dynamic variables
-        geom.znucl = new int[geom.ntypat];
-        geom.typat = new int[geom.natom];
+        geom.znucl = new Double[geom.ntypat];
+        geom.typat = new Integer[geom.natom];
 
         //Second pass through the file
         inputBuffer = new BufferedReader(new FileReader(fileName));
@@ -153,7 +153,7 @@ public class AbinitParser {
           if (fieldVal.equals("znucl")) {
             for (int i = 0; i < geom.ntypat; i++) {
               nextAbinitInputToken(false);
-              geom.znucl[i] = (int)(atof(fieldVal));
+              geom.znucl[i] = (atof(fieldVal));
             }
           } else if (fieldVal.equals("typat")) {
             for (int i = 0; i < geom.natom; i++) {
@@ -161,7 +161,7 @@ public class AbinitParser {
               geom.typat[i] = Integer.parseInt(fieldVal);
             }
           } else if (fieldVal.equals("xangst")) {
-            geom.xangst = new double[geom.natom][3];
+            geom.xangst = new Double[geom.natom][3];
             for (int i = 0; i < geom.natom; i++) {
               for (int j = 0; j < 3; j++) {
                 nextAbinitInputToken(false);
@@ -169,7 +169,7 @@ public class AbinitParser {
               }
             }
           } else if (fieldVal.equals("xcart")) {
-            geom.xangst = new double[geom.natom][3];
+            geom.xangst = new Double[geom.natom][3];
             for (int i = 0; i < geom.natom; i++) {
               for (int j = 0; j < 3; j++) {
                 nextAbinitInputToken(false);
@@ -178,7 +178,7 @@ public class AbinitParser {
               }
             }
           } else if (fieldVal.equals("xred")) {
-            geom.xred = new double[geom.natom][3];
+            geom.xred = new Double[geom.natom][3];
             for (int i = 0; i < geom.natom; i++) {
               for (int j = 0; j < 3; j++) {
                 nextAbinitInputToken(false);
