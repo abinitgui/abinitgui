@@ -63,19 +63,21 @@ import javax.swing.table.TableCellEditor;
 
 public class ScriptTable extends JTable
 {
+    private String curPath = ".";
+    
     @Override
     public TableCellEditor getCellEditor(int row, int column)
     {
         ScriptArgument arg = (ScriptArgument)(getModel().getValueAt(row,0));
         
-//        if(arg.type.toUpperCase().equals("INPUTFILE"))
-//        {
-//            return new FileEditor();
-//        }
-//        else if(arg.type.toUpperCase().equals("BOOLEAN"))
-//        {
-//            return new BooleanEditor();
-//        }
+        if(arg.type.toUpperCase().contains("FILE"))
+        {
+            return new FileEditor();
+        }
+        else if(arg.type.toUpperCase().equals("BOOLEAN"))
+        {
+            return new BooleanEditor();
+        }
         
         return getDefaultEditor(getModel().getValueAt(row, column).getClass());
     }
@@ -162,15 +164,20 @@ public class ScriptTable extends JTable
         @Override
         public void actionPerformed(ActionEvent e) {
             
-            JFileChooser fc = new JFileChooser();
+            JFileChooser fc = new JFileChooser(curPath);
+            File currDir = new File(".");
+            String currPath = currDir.getAbsolutePath();
+            String basePath = basePath = currPath.replace("\\", "/").replace(".", "");
             
             int returnVal = fc.showOpenDialog(ScriptTable.this);
 
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = fc.getSelectedFile();
+                curPath = file.getParent();
                 //This is where a real application would open the file.
                 System.out.println("Opening: " + file.getName() + ".");
-                this.fileName = file.getName();
+                String relPath = file.getAbsolutePath().replace("\\", "/").replace(basePath, "./");
+                this.fileName = relPath;
             } else {
                 System.out.println("Open command cancelled by user.");
             }

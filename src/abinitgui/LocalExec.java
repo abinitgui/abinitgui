@@ -47,6 +47,7 @@ For more information on the Abinit Project, please see
 package abinitgui;
 
 import java.io.*;
+import java.util.Arrays;
 
 public class LocalExec {
 
@@ -87,6 +88,30 @@ public class LocalExec {
         } catch (Exception e) {
             errorMSG += e;
             return new RetMSG(-1, errorMSG, CMD);
+        }
+    }
+    
+    public RetMSG sendCommand(String CMD[]) {
+        try {
+            proc = rt.exec(CMD);
+        } catch (Exception e) {
+            errorMSG += e;
+            return new RetMSG(-1, errorMSG, Arrays.toString(CMD));
+        }
+        try {
+            leErr = new LocalExecOutput(proc.getErrorStream(), ERROR_TYPE);
+            leOut = new LocalExecOutput(proc.getInputStream(), SUCCES_TYPE);
+            int exitVal = proc.waitFor();
+            if (exitVal == RetMSG.SUCCES) {
+                leOut.join();
+                return new RetMSG(RetMSG.SUCCES, succesMSG, Arrays.toString(CMD));
+            } else {
+                leErr.join();
+                return new RetMSG(exitVal, errorMSG, Arrays.toString(CMD));
+            }
+        } catch (Exception e) {
+            errorMSG += e;
+            return new RetMSG(-1, errorMSG, Arrays.toString(CMD));
         }
     }
 

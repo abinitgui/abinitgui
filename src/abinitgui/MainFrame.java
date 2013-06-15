@@ -61,6 +61,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
@@ -123,7 +124,6 @@ public class MainFrame extends javax.swing.JFrame {
     private final ScriptBib scriptBibs;
     private final ScriptTableModel argsModel;
     private final ScriptTableModel outModel;
-    private final ScriptTableModel inputModel;
     private String curPath = "."; // to save current Path !
     private ProjectManager projectManager;
     private GUIEditor guiEditor;
@@ -237,12 +237,6 @@ public class MainFrame extends javax.swing.JFrame {
         /**
          * Script section *
          */
-        inputModel = new ScriptTableModel(scriptInputTable);
-        scriptInputTable.setModel(inputModel);
-        initTableHeader(scriptInputTable, new String[]{"Name", "Value"},
-                new Integer[]{null, null});
-        scriptInputTable.setDefaultRenderer(ScriptArgument.class,
-                new ScriptArgumentRenderer());
 
         argsModel = new ScriptTableModel(scriptArgTable);
         scriptArgTable.setModel(argsModel);
@@ -295,7 +289,7 @@ public class MainFrame extends javax.swing.JFrame {
         testAnalyze.setVisible(false);
         editPYDFT.setVisible(false);
         jMenuClustepAndTB.setVisible(false);
-        localAbinitRadioButton.setVisible(false);
+        localAbinitRadioButton.setVisible(true);
         abipyPathPathLabel.setVisible(false);
         abipyPathTextField.setVisible(false);
 
@@ -480,9 +474,6 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         scriptProgram = new javax.swing.JTextField();
         openOutput = new javax.swing.JButton();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        scriptInputTable = new ScriptTable();
-        jLabel10 = new javax.swing.JLabel();
         editScripts = new javax.swing.JButton();
         reloadScripts = new javax.swing.JButton();
         connectionToggleButton = new javax.swing.JToggleButton();
@@ -1231,18 +1222,6 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        scriptInputTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        jScrollPane4.setViewportView(scriptInputTable);
-
-        jLabel10.setText("Input file :");
-
         editScripts.setText("Edit script");
         editScripts.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1267,7 +1246,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .add(scriptScrollPane)
                     .add(editScripts, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, reloadScripts, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE))
-                .add(18, 18, 18)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jPanel1Layout.createSequentialGroup()
                         .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -1283,16 +1262,6 @@ public class MainFrame extends javax.swing.JFrame {
                         .add(12, 12, 12))
                     .add(jPanel1Layout.createSequentialGroup()
                         .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jLabel5)
-                            .add(jLabel10))
-                        .add(0, 0, Short.MAX_VALUE))
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                            .add(org.jdesktop.layout.GroupLayout.LEADING, jScrollPane2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .add(jScrollPane4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                        .addContainerGap())
-                    .add(jPanel1Layout.createSequentialGroup()
-                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(jScrollPane3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .add(jPanel1Layout.createSequentialGroup()
                                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -1306,6 +1275,12 @@ public class MainFrame extends javax.swing.JFrame {
                                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                                         .add(openOutput)))
                                 .add(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .add(jLabel5)
+                        .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .add(jPanel1Layout.createSequentialGroup()
+                        .add(jScrollPane2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
@@ -1325,13 +1300,9 @@ public class MainFrame extends javax.swing.JFrame {
                             .add(jLabel9)
                             .add(scriptProgram, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jLabel10)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jScrollPane4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 67, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jLabel5)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jScrollPane2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 100, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .add(jScrollPane2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 194, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(scriptScrollPane, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 366, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -1347,7 +1318,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(launchScript)
                     .add(openOutput))
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         org.jdesktop.layout.GroupLayout postProcPanelLayout = new org.jdesktop.layout.GroupLayout(postProcPanel);
@@ -1875,7 +1846,7 @@ public class MainFrame extends javax.swing.JFrame {
                 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
                 if (localAbinitRadioButton_isSelected && Utils.osName().startsWith("Windows")) {
-                    printERR("Please connect to a remote CLUSTEP host before submitting a simulation !");
+                    printERR("Please connect to a remote host before submitting a simulation on Windows platform !");
                     sendSIMButton_setEnabled(true);
                     return;
                 }
@@ -2108,7 +2079,7 @@ public class MainFrame extends javax.swing.JFrame {
                             }
                         }
                         // lancement des commandes d'exécution de la simulation
-                        sendCommand("bash " + SHFileR);
+                        sendCommand("bash "+SHFileR);
                     } else if (script.getSystem().equals("SLURM")) {
                         String slurmSHFile = rootPath + sep + simName + ".SLURM.sh";
                         String slurmSHFileR = rootPath + "/" + simName + ".SLURM.sh";
@@ -2510,7 +2481,6 @@ public class MainFrame extends javax.swing.JFrame {
             scriptProgram.setText("");
             argsModel.resetScripts();
             outModel.resetScripts();
-            inputModel.resetScripts();
         } else {
             Script scr = scriptBibs.getList().get(index);
             if (scr == null) {
@@ -2519,7 +2489,6 @@ public class MainFrame extends javax.swing.JFrame {
                 scriptProgram.setText("");
                 argsModel.resetScripts();
                 outModel.resetScripts();
-                inputModel.resetScripts();
                 return;
             }
 
@@ -2530,15 +2499,6 @@ public class MainFrame extends javax.swing.JFrame {
             scriptProgram.setText(scr.program);
             argsModel.resetScripts();
             outModel.resetScripts();
-            inputModel.resetScripts();
-
-            ArrayList<ScriptArgument> listInput = scr.listInput;
-
-            int nbInput = listInput.size();
-
-            for (int i = 0; i < nbInput; i++) {
-                inputModel.addScript(listInput.get(i));
-            }
 
             ArrayList<ScriptArgument> listArgs = scr.listArgs;
 
@@ -2592,20 +2552,11 @@ public class MainFrame extends javax.swing.JFrame {
 
                 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-                if (localAbinitRadioButton_isSelected && Utils.osName().startsWith("Windows")) {
-                    printERR("Please connect to a remote host before submitting a script !");
+                if (Utils.osName().startsWith("Windows") || Utils.osName().startsWith("MAC")) {
+                    printERR("Scripts are not yet supported for Windows platform");
                     launchScript.setEnabled(true);
                     return;
                 }
-
-                if ((remoteGatewayRadioButton_isSelected
-                        || remoteAbinitRadioButton_isSelected) && remoteExec == null) {
-                    printERR("Please connect to a ABINIT host before submitting a script !");
-                    launchScript.setEnabled(true);
-                    return;
-                }
-
-                createFiletree();
 
                 // ********************************************************************************************************************************
 
@@ -2614,36 +2565,15 @@ public class MainFrame extends javax.swing.JFrame {
                 String CMD = "pwd";
 
                 RetMSG retmsg;
-                if (remoteGatewayRadioButton_isSelected || remoteAbinitRadioButton_isSelected) {
-                    if (remoteExec != null) {
-                        retmsg = remoteExec.sendCommand(CMD);
-                        if (retmsg.getRetCode() == RetMSG.SUCCES) {
-                            printOUT("PWD: " + retmsg.getRetMSG());
-                            cwd = removeEndl(retmsg.getRetMSG());
-                        } else {
-                            //printERR("Error (RetVal = " + retmsg.getRetCode() + "): " + retmsg.getRetMSG());
-                            printERR("Error: " + retmsg.getRetMSG() + " !");
-                        }
-                    } else {
-                        printERR("First connect to an abinit host please !");
-                    }
-                } else if (localAbinitRadioButton_isSelected) {
-                    if (localExec != null) {
-                        retmsg = localExec.sendCommand(CMD);
-                        if (retmsg.getRetCode() == RetMSG.SUCCES) {
-                            printOUT("PWD: " + retmsg.getRetMSG());
-                            cwd = removeEndl(retmsg.getRetMSG());
-                        } else {
-                            //printERR("Error (RetVal = " + retmsg.getRetCode() + "): " + retmsg.getRetMSG());
-                            printERR("Error: " + retmsg.getRetMSG() + " !");
-                        }
-                    }
-                } else { // Le choix n'a pas été fait
-                    printERR("Choose a destination option please at config. tab !");
+                
+                retmsg = localExec.sendCommand(CMD);
+                if (retmsg.getRetCode() == RetMSG.SUCCES) {
+                    printOUT("PWD: " + retmsg.getRetMSG());
+                    cwd = removeEndl(retmsg.getRetMSG());
+                } else {
+                    printERR("Error: " + retmsg.getRetMSG() + " !");
                 }
-
-                // ********************************************************************************************************************************
-
+                        
                 String inputFileName = Utils.getLastToken(inputFile.replace('\\', '/'), "/");
 
                 // Test de l'existance de inputfile
@@ -2654,39 +2584,25 @@ public class MainFrame extends javax.swing.JFrame {
                 }
 
                 if (!inputFile.equals("")) {
-                    // Will do the computation
-
-                    // Envoie (copie) du fichier d'input
+                    // Will do the computation in rootpath/folder
                     String inputFileR = rootPath + "/" + folder + "/" + inputFileName;
                     putFile(inputFile + " " + inputFileR);
-
-                    if (remoteGatewayRadioButton_isSelected
-                            || remoteAbinitRadioButton_isSelected) {
-                        if (Utils.osName().startsWith("Windows")) {
-                            sendCommand("dos2unix " + inputFileR);
-                            // TODO Util.dos2unix(new File(inputFileR)); // Transformer avant d'envoyer le fichier
-                        }
-                    }
-                    // "PYTHONPATH=\""+abipyPathTextField.getText()+"\":$PYTHONPATH "+
+                    
+                    ArrayList<String> allCommand = new ArrayList<>();
+                    ArrayList<ScriptArgument> listArgs = scr.listArgs;
+                    allCommand.add(program);
+                    allCommand.add(inputFileR);
                     
                     String command = program + " " + inputFileR;
 
-                    ArrayList<ScriptArgument> listInput = scr.listInput;
-
-                    for (int i = 0; i < listInput.size(); i++) {
-                        String input = (String) scriptInputTable.getValueAt(i, 1);
-                        String nameFile = Utils.getLastToken(input.replace('\\', '/'), "/");
-                        String outFileR = rootPath + "/" + folder + "/" + nameFile;
-                        command = command + " --" + listInput.get(i).name + " \"" + outFileR + "\"";
-                    }
-
-
-                    ArrayList<ScriptArgument> listArgs = scr.listArgs;
-
                     for (int i = 0; i < listArgs.size(); i++) {
                         String input = (String) scriptArgTable.getValueAt(i, 1);
-                        command = command + " --" + listArgs.get(i).name + " \"" + input + "\"";
+                        command = command + " --" + listArgs.get(i).name + " \'" + input + "\'";
+                        allCommand.add("--" + listArgs.get(i).name );
+                        allCommand.add(input);
                     }
+                    
+                    System.out.println("CWD = "+cwd);
 
                     ArrayList<ScriptArgument> listOut = scr.listOutput;
 
@@ -2695,51 +2611,14 @@ public class MainFrame extends javax.swing.JFrame {
 
                         String outFileR = rootPath + "/" + folder + "/" + outFile;
 
-                        command = command + " --" + listOut.get(i).name + " \"" + outFileR + "\"";
+                        command = command + " --" + listOut.get(i).name + " \'" + outFileR + "\'";
+                        allCommand.add("--" + listOut.get(i).name);
+                        allCommand.add(outFileR);
                     }
-
-                    // Send files first
-                    for (int i = 0; i < listInput.size(); i++) {
-                        String inFile = (String) scriptInputTable.getValueAt(i, 1);
-
-                        String nameFile = Utils.getLastToken(inFile.replace('\\', '/'), "/");
-
-                        String outFileR = rootPath + "/" + folder + "/" + nameFile;
-
-                        putFile(inFile + " " + outFileR);
-
-                        // hardcoded extensions for the moment
-                        if (outFileR.endsWith(".txt")
-                                || outFileR.endsWith(".dbs")
-                                || outFileR.endsWith(".agr")) {
-                            if (Utils.osName().startsWith("Windows")) {
-                                sendCommand("dos2unix " + outFileR);
-                            }
-                        }
-                    }
-
-                    sendCommand(command);
+                    
+                    String[] arrayCMD = allCommand.toArray(new String[0]);
+                    sendCommand(arrayCMD);
                     printDEB(command);
-
-                    // Get files back
-                    for (int i = 0; i < listOut.size(); i++) {
-                        String outFile = (String) scriptOutTable.getValueAt(i, 1);
-
-                        String outFileR = rootPath + "/" + folder + "/" + outFile;
-
-                        getFile(outFileR + " " + outFileR);
-
-
-                        // hardcoded extensions for the moment
-                        if (outFileR.endsWith(".txt")
-                                || outFileR.endsWith(".dbs")
-                                || outFileR.endsWith(".agr")) {
-                            if (Utils.osName().startsWith("Windows")) {
-                                Utils.unix2dos(new File(outFileR));
-                            }
-                        }
-                    }
-
 
                 }
 
@@ -3260,7 +3139,30 @@ public class MainFrame extends javax.swing.JFrame {
             if (retmsg.getRetCode() == RetMSG.SUCCES) {
                 printOUT("Succes: " + retmsg.getCMD() + " => " + removeEndl(retmsg.getRetMSG()) + ".");
             } else {
+                printERR("Error (RetVal = " + retmsg.getRetCode() + ") : " + retmsg.getRetMSG());
+                printERR("Error: " + removeEndl(retmsg.getRetMSG()) + " !");
+            }
+        } else { // Le choix n'a pas été fait
+            printERR("Choose a destination option please at config. tab !");
+        }
+    }      
+
+    public void sendCommand(String CMD[]) /*throws CMDException*/ {
+        RetMSG retmsg;
+        if (remoteGatewayRadioButton.isSelected() || remoteAbinitRadioButton.isSelected()) {
+            retmsg = remoteExec.sendCommand(CMD);
+            if (retmsg.getRetCode() == RetMSG.SUCCES) {
+                printOUT("Succes: " + retmsg.getCMD() + " => " + removeEndl(retmsg.getRetMSG()) + ".");
+            } else {
                 //printERR("Error (RetVal = " + retmsg.getRetCode() + "): " + retmsg.getRetMSG());
+                printERR("Error: " + removeEndl(retmsg.getRetMSG()) + " !");
+            }
+        } else if (localAbinitRadioButton.isSelected()) {
+            retmsg = localExec.sendCommand(CMD);
+            if (retmsg.getRetCode() == RetMSG.SUCCES) {
+                printOUT("Succes: " + retmsg.getCMD() + " => " + removeEndl(retmsg.getRetMSG()) + ".");
+            } else {
+                printERR("Error (RetVal = " + retmsg.getRetCode() + ") : " + retmsg.getRetMSG());
                 printERR("Error: " + removeEndl(retmsg.getRetMSG()) + " !");
             }
         } else { // Le choix n'a pas été fait
@@ -3775,12 +3677,7 @@ public class MainFrame extends javax.swing.JFrame {
                         localCommand("open -a textedit " + fileName);
                     } else if (Utils.osName().startsWith("Windows")) {
                         Utils.unix2dos(new File(fileName));
-                        File f = new File("./np/notepad++.exe");
-                        if (f.exists()) {
-                            localCommand("./np/notepad++.exe " + fileName);
-                        } else {
-                            localCommand("notepad " + fileName);
-                        }
+                        localCommand("notepad " + fileName);
                     } else {
                         printDEB("You must be in a UNIX platform to edit the input"
                                 + "\nfile with a text editor from this GUI!");
@@ -3873,7 +3770,6 @@ public class MainFrame extends javax.swing.JFrame {
     javax.swing.JCheckBox jCB_useKey1;
     javax.swing.JCheckBox jCB_useKey2;
     javax.swing.JLabel jLabel1;
-    javax.swing.JLabel jLabel10;
     javax.swing.JLabel jLabel3;
     javax.swing.JLabel jLabel4;
     javax.swing.JLabel jLabel5;
@@ -3887,7 +3783,6 @@ public class MainFrame extends javax.swing.JFrame {
     javax.swing.JScrollPane jScrollPane1;
     javax.swing.JScrollPane jScrollPane2;
     javax.swing.JScrollPane jScrollPane3;
-    javax.swing.JScrollPane jScrollPane4;
     javax.swing.JScrollPane jScrollPane5;
     javax.swing.JTextField jTF_key1;
     javax.swing.JTextField jTF_key2;
@@ -3932,7 +3827,6 @@ public class MainFrame extends javax.swing.JFrame {
     javax.swing.JMenuItem saveMenuItem;
     javax.swing.JTable scriptArgTable;
     javax.swing.JTextArea scriptDescription;
-    javax.swing.JTable scriptInputTable;
     javax.swing.JList scriptList;
     javax.swing.JLabel scriptName;
     javax.swing.JTable scriptOutTable;

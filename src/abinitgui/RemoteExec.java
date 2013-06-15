@@ -505,4 +505,8 @@ public class RemoteExec {
         }
         return b;
     }
+
+    RetMSG sendCommand(String[] CMD) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
 }

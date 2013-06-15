@@ -29,12 +29,12 @@
         <filename filename="scriptsBib/AbinitBandStructureMaker.py" />
         <description description="Uses the input dbs file to create an XMGrace file (.agr) and a picture (.eps)" />
         <program program="python" />
-        <file>
+        <input>
             <name name="abinitoutput" />
             <help help="DBS file" />
 	    <type type="INPUTFILE" />
             <default default="./MySims/scripts/test3.dbs" />
-        </file>
+        </input>
         <input>
             <name name="autolaunch" />
             <help help="Set it to yes if you want xmgrace to be runned automatically" />
