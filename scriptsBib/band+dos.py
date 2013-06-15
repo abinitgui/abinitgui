@@ -4,41 +4,18 @@ import abipy;
 import os, sys;
 import argparse;
 
-def bsanddos(inputDos,inputBand,outputDos,outputBand,outputBoth,titleBS,titleDOS,backend):
-
-    import matplotlib;
-    matplotlib.use(backend);
-    import matplotlib.pyplot as plt;
-
-    fig = plt.figure();
+def bsanddos(inputDos,inputBand,outputDos,outputBand,outputBoth,titleBS,titleDOS,show):
 
     ebands = abipy.ebands.ElectronBands.from_ncfile(inputBand)
     ebandsDos = abipy.ebands.ElectronBands.from_ncfile(inputDos)
 
     dos = ebandsDos.get_dos();
 
-    dos.plot(title=titleDOS,fig=fig)
-    
-    fig.savefig(outputDos);
+    fig=dos.plot(title=titleDOS,show=show,savefig=outputBand)
 
-    plt.close(fig);
+    fig=ebands.plot(title=titleBS,show=show,savefig=outputDos,klabels={(0.0,0.0,0.0) : "$\Gamma$", (0.5,0.0,0.0) : "L", (0.5,0.25,0.0) : "B", (0.5,0.5,0.0) : "X"})
 
-    fig = plt.figure();
-    ebands.plot(title=titleBS,fig=fig,klabels={(0.0,0.0,0.0) : "$\Gamma$", (0.5,0.0,0.0) : "L", (0.5,0.25,0.0) : "B", (0.5,0.5,0.0) : "X"})
-
-    fig.savefig(outputBand);
-
-    plt.close(fig);
-
-    fig = plt.figure();
-    ebands.plot_with_dos(dos,fig=fig,klabels={(0.0,0.0,0.0) : "$\Gamma$", (0.5,0.0,0.0) : "L"});
-
-    fig.savefig(outputBoth);
-    plt.close(fig);
-
-def usage():
-    """usage de la ligne de commande"""
-    print "usage: ", sys.argv[0], "--inputFile=file --outputFile=file"
+    fig=ebands.plot_with_dos(dos,savefig=outputBoth,show=show,klabels={(0.0,0.0,0.0) : "$\Gamma$", (0.5,0.0,0.0) : "L"});
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -49,6 +26,6 @@ if __name__ == "__main__":
     parser.add_argument('-A', '--outputBoth')
     parser.add_argument('-t', '--titleBS')
     parser.add_argument('-u', '--titleDOS')
-    parser.add_argument('-f', '--backend')
+    parser.add_argument('-s', '--show')
     args = parser.parse_args()
-    bsanddos(args.inputDos,args.inputBand,args.outputDos,args.outputBand,args.outputBoth,args.titleBS,args.titleDOS,args.backend);
+    bsanddos(args.inputDos,args.inputBand,args.outputDos,args.outputBand,args.outputBoth,args.titleBS,args.titleDOS,args.show);

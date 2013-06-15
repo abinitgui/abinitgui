@@ -2531,6 +2531,13 @@ public class MainFrame extends javax.swing.JFrame {
                 String rootPath = mySimulationsTextField.getText();
 
                 String folder = "scripts";
+                
+                String path = mySimulationsTextField.getText();
+                if (path.equals("")) {
+                    path = ".";
+                }
+                
+                createLocalTree(path);
 
                 int index = scriptList.getSelectedIndex();
 
@@ -2586,7 +2593,10 @@ public class MainFrame extends javax.swing.JFrame {
                 if (!inputFile.equals("")) {
                     // Will do the computation in rootpath/folder
                     String inputFileR = rootPath + "/" + folder + "/" + inputFileName;
-                    putFile(inputFile + " " + inputFileR);
+                    retmsg = localExec.sendCommand("cp "+inputFile+" "+inputFileR);
+                    if (retmsg.getRetCode() != RetMSG.SUCCES) {
+                        printERR("Error: " + retmsg.getRetMSG() + " !");
+                    }
                     
                     ArrayList<String> allCommand = new ArrayList<>();
                     ArrayList<ScriptArgument> listArgs = scr.listArgs;
@@ -2608,16 +2618,19 @@ public class MainFrame extends javax.swing.JFrame {
 
                     for (int i = 0; i < listOut.size(); i++) {
                         String outFile = (String) scriptOutTable.getValueAt(i, 1);
-
                         String outFileR = rootPath + "/" + folder + "/" + outFile;
-
                         command = command + " --" + listOut.get(i).name + " \'" + outFileR + "\'";
                         allCommand.add("--" + listOut.get(i).name);
                         allCommand.add(outFileR);
                     }
                     
                     String[] arrayCMD = allCommand.toArray(new String[0]);
-                    sendCommand(arrayCMD);
+                    retmsg = localExec.sendCommand(arrayCMD);
+                    if (retmsg.getRetCode() == RetMSG.SUCCES) {
+                        printOUT("Script output : \n"+retmsg.getRetMSG());
+                    } else {
+                        printERR("Error: " + retmsg.getRetMSG() + " !");
+                    }
                     printDEB(command);
 
                 }
@@ -3145,29 +3158,6 @@ public class MainFrame extends javax.swing.JFrame {
         } else { // Le choix n'a pas été fait
             printERR("Choose a destination option please at config. tab !");
         }
-    }      
-
-    public void sendCommand(String CMD[]) /*throws CMDException*/ {
-        RetMSG retmsg;
-        if (remoteGatewayRadioButton.isSelected() || remoteAbinitRadioButton.isSelected()) {
-            retmsg = remoteExec.sendCommand(CMD);
-            if (retmsg.getRetCode() == RetMSG.SUCCES) {
-                printOUT("Succes: " + retmsg.getCMD() + " => " + removeEndl(retmsg.getRetMSG()) + ".");
-            } else {
-                //printERR("Error (RetVal = " + retmsg.getRetCode() + "): " + retmsg.getRetMSG());
-                printERR("Error: " + removeEndl(retmsg.getRetMSG()) + " !");
-            }
-        } else if (localAbinitRadioButton.isSelected()) {
-            retmsg = localExec.sendCommand(CMD);
-            if (retmsg.getRetCode() == RetMSG.SUCCES) {
-                printOUT("Succes: " + retmsg.getCMD() + " => " + removeEndl(retmsg.getRetMSG()) + ".");
-            } else {
-                printERR("Error (RetVal = " + retmsg.getRetCode() + ") : " + retmsg.getRetMSG());
-                printERR("Error: " + removeEndl(retmsg.getRetMSG()) + " !");
-            }
-        } else { // Le choix n'a pas été fait
-            printERR("Choose a destination option please at config. tab !");
-        }
     }
 
     public void localCommand(String CMD) /*throws CMDException*/ {
@@ -3610,6 +3600,17 @@ public class MainFrame extends javax.swing.JFrame {
             }
         }
     }
+    
+    public void createLocalTree(String path)
+    {
+        mkdir(path);
+        mkdir(path + "/input");
+        mkdir(path + "/output");
+        mkdir(path + "/wholedata");
+        mkdir(path + "/logfiles");
+        mkdir(path + "/pseudopot");
+        mkdir(path + "/scripts");
+    }
 
     public void createFiletree() {
         if (localExec != null) {
@@ -3619,13 +3620,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
             if (localAbinitRadioButton.isSelected()) {
                 // Création de l'arborescence locale
-                mkdir(path);
-                mkdir(path + "/input");
-                mkdir(path + "/output");
-                mkdir(path + "/wholedata");
-                mkdir(path + "/logfiles");
-                mkdir(path + "/pseudopot");
-                mkdir(path + "/scripts");
+                createLocalTree(path);
             } else {
                 if (remoteExec != null && (remoteGatewayRadioButton.isSelected() || remoteAbinitRadioButton.isSelected())) {
                     mkdirR(path);

@@ -108,7 +108,7 @@ public class ScriptTable extends JTable
         public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
             
             status = (String)value;
-            stat = (status.equals("yes"));
+            stat = (status.equals("True"));
             return but;
         }
 
@@ -119,11 +119,11 @@ public class ScriptTable extends JTable
             
             if(stat)
             {
-                status = "yes";
+                status = "True";
             }
             else
             {
-                status = "no";
+                status = "False";
             }
             
             fireEditingStopped();

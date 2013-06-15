@@ -1,6 +1,138 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <listscript>
     <script>
+        <title title="Band structure (Abipy)" />
+        <filename filename="scriptsBib/bandstructure.py" />
+        <description description="Creates a band structure from an ETSF-IO WFK file (accesswff 3 is mandatory in the input file)" />
+        <program program="python" />
+        <input>
+            <name name="inputFile" />
+	    <type type="file" />
+            <help help="The fileName which will be read" />
+            <default default="./MySims/wholedata/test3/test3o_DS2_WFK_0-etsf.nc" />
+        </input>
+        <input>
+            <name name="show" />
+            <type type="boolean" />
+            <help help="True to show the figure" />
+            <default default="True" />
+        </input>
+        <input>
+            <name name="title" />
+            <type type="text" />
+            <help help="The title of the graph" />
+            <default default="A sample title" />
+        </input>
+        <output>
+            <name name="outputFile" />
+            <type type="file" />
+            <help help="The fileName which contains the plot" />
+            <default default="bs.eps" />
+        </output>
+    </script>
+    <script>
+        <title title="Density of States (Abipy)" />
+        <filename filename="scriptsBib/dos.py" />
+        <description description="Creates a density of states from an ETSF-IO WFK file (accesswff 3 is mandatory in the input file)" />
+        <program program="python" />
+        <input>
+            <name name="inputFile" />
+            <type type="file" />
+            <help help="The fileName which will be read" />
+            <default default="./MySims/wholedata/test3/test3o_DS2_WFK_0-etsf.nc" />
+        </input>
+        <input>
+            <name name="show" />
+            <type type="boolean" />
+            <help help="True to show the graph" />
+            <default default="True" />
+        </input>
+        <input>
+            <name name="title" />
+            <type type="text" />
+            <help help="The title of the graph" />
+            <default default="A sample title" />
+        </input>
+        <input>
+            <name name="method" />
+            <type type="text" />
+            <help help="Method used to generate the dos" />
+            <default default="gaussian" />
+        </input>
+        <input>
+            <name name="step" />
+            <type type="number" />
+            <help help="Defines the sampling of the energies" />
+            <default default="0.002" />
+        </input>
+        <input>
+	    <name name="width" />
+            <type type="number" />
+            <help help="Width of the gaussians" />
+            <default default="0.01" />
+        </input>
+        <output>
+            <name name="outputFile" />
+            <type type="file" />
+            <help help="The fileName which contains the plot" />
+            <default default="dos.eps" />
+        </output>
+    </script>
+    <script>
+        <title title="BS + DOS (Abipy)" />
+        <filename filename="scriptsBib/band+dos.py" />
+        <description description="Creates a density of states and the band structure from two ETSF-IO WFK file  (accesswff 3 is mandatory in the input file)" />
+        <program program="python" />
+        <input>
+            <name name="inputDos" />
+            <type type="file" />
+            <help help="The WFK file used to compute the DOS" />
+            <default default="./MySims/wholedata/test3/test3o_DS2_WFK_0-etsf.nc" />
+        </input>	
+        <input>
+            <name name="inputBand" />
+            <type type="file" />
+            <help help="The WFK file used to compute the BS" />
+            <default default="./MySims/wholedata/test3/test3o_DS2_WFK_0-etsf.nc" />
+        </input>
+        <input>
+            <name name="show" />
+            <type type="boolean" />
+            <help help="True to show the graphs" />
+            <default default="True" />
+        </input>
+        <input>
+            <name name="titleBS" />
+            <type type="text" />
+            <help help="The title of the BS" />
+            <default default="A sample title" />
+        </input>
+        <input>
+            <name name="titleDOS" />
+            <type type="text" />
+            <help help="The title of the DOS" />
+            <default default="A sample title" />
+        </input>
+        <output>
+            <name name="outputDos" />
+            <type type="file" />
+            <help help="The fileName which contains the plot of DOS" />
+            <default default="dos.eps" />
+        </output>
+        <output>
+            <name name="outputBand" />
+            <type type="file" />
+            <help help="The fileName which contains the plot of BS" />
+            <default default="band.eps" />
+        </output>
+        <output>
+            <name name="outputBoth" />
+            <type type="file" />
+            <help help="The fileName which contains the plot of both simultaneously" />
+            <default default="bs+dos.eps" />
+        </output>
+    </script>
+    <script>
         <title title="AbinitBandStructureMaker (#1)" />
         <filename filename="scriptsBib/AbinitBandStructureMaker.py" />
         <description description="Reads the output file of a simulation to create an intermediate file (.dbs)" />

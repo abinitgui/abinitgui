@@ -20,7 +20,6 @@ if __name__ == "__main__":
     parser.add_argument('-o', '--outputFile')
     parser.add_argument('-i', '--inputFile')
     parser.add_argument('-t', '--title')
-    parser.add_argument('-f', '--backend')
     parser.add_argument('-s', '--show')
     args = parser.parse_args()
     bandstructure(args.inputFile,args.outputFile,args.title,args.show=='True')
