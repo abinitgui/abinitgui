@@ -28,26 +28,12 @@ Go to the "gui" folder inside the abinit package (the folder where you can find 
 
 Execute the following commands at the command line (terminal):
 
-prompt# ./bootstrap.sh
+prompt# ant standalone
 
-Please refer to the INSTALL file for more details!
-
-prompt# ./configure
-prompt# make
-
-Now you should have the AbinitGUI.jar executable in the "src/Prog" subdirectory.
-
-You can also install the GUI in your system, but you need administrator rights on the machine.
-
-prompt# make install
-
-To clean the compiled files and the configurations type:
-
-prompt# make clean
-prompt# ./wipeout.sh
+You should read "BUILD SUCCESSFUL" at the end and the AbinitGUI.jar executable should appear in the "standalone" subdirectory.
 
 ATTENTION! The Abinit GUI is known to work with:
-  * Sun JDK
+  * Oracle JDK
   * OpenJDK
 But at present, the build fails with Eclipse JDK.
 

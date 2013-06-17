@@ -8,6 +8,7 @@ Version='2013r3'
 PackageFolder='AbinitGUI-'$Version
 
 #bash MakeGUI
+#ant standalone
 
 # Création du dossier contenant le Package AbinitGUI
 [ -d $PackageFolder ] && echo 'Folder '$PackageFolder' exists!' || mkdir $PackageFolder
