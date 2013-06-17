@@ -2667,7 +2667,7 @@ public class MainFrame extends javax.swing.JFrame {
         // Open files
         for (int i = 0; i < listOut.size(); i++) {
             String outFile = (String) scriptOutTable.getValueAt(i, 1);
-            String outFileR = rootPath + "/" + folder + "/" + outFile;
+            //String outFileR = rootPath + "/" + folder + "/" + outFile;
 
             File f = new File(rootPath);
 
@@ -2684,19 +2684,17 @@ public class MainFrame extends javax.swing.JFrame {
                 return;
             }
 
-            outFileR = abs + "/" + folder + "/" + outFile;
+            f = new File(outFile);
 
-            f = new File(outFileR);
-
-            printOUT("Trying to open file : " + outFileR);
+            printOUT("Trying to open file : " + outFile);
             if (f.exists()) {
                 try {
                     if (Desktop.isDesktopSupported()) {
                         if (Utils.osName().contains("Windows")) {
-                            if (outFileR.endsWith(".txt") || outFileR.endsWith(".dbs") || outFileR.endsWith(".agr")
-                                    || outFileR.endsWith(".files") || outFileR.endsWith(".in") || outFileR.endsWith(".out")
-                                    || outFileR.endsWith(".sh")) {
-                                editFile(outFileR, true);
+                            if (outFile.endsWith(".txt") || outFile.endsWith(".dbs") || outFile.endsWith(".agr")
+                                    || outFile.endsWith(".files") || outFile.endsWith(".in") || outFile.endsWith(".out")
+                                    || outFile.endsWith(".sh")) {
+                                editFile(outFile, true);
                             } else {
                                 Desktop.getDesktop().open(f);
                             }
@@ -2705,11 +2703,11 @@ public class MainFrame extends javax.swing.JFrame {
                         }
                     } else {
                         printOUT("Not able to open the file with the default editor. Use basic editor instead.");
-                        editFile(outFileR, true);
+                        editFile(outFile, true);
                     }
                 } catch (IOException ex) {
                     printOUT("Not able to open the file with the default editor. Use editor instead.");
-                    editFile(outFileR, true);
+                    editFile(outFile, true);
                 }
             } else {
                 printERR("Please execute the script before opening the output files.");
