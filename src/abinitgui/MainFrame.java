@@ -2618,10 +2618,10 @@ public class MainFrame extends javax.swing.JFrame {
 
                     for (int i = 0; i < listOut.size(); i++) {
                         String outFile = (String) scriptOutTable.getValueAt(i, 1);
-                        String outFileR = rootPath + "/" + folder + "/" + outFile;
-                        command = command + " --" + listOut.get(i).name + " \'" + outFileR + "\'";
+//                        String outFileR = rootPath + "/" + folder + "/" + outFile;
+                        command = command + " --" + listOut.get(i).name + " \'" + outFile + "\'";
                         allCommand.add("--" + listOut.get(i).name);
-                        allCommand.add(outFileR);
+                        allCommand.add(outFile);
                     }
                     
                     String[] arrayCMD = allCommand.toArray(new String[0]);
