@@ -54,6 +54,7 @@ import java.util.logging.*;
 import javax.swing.*;
 import javax.swing.table.*;
 import json.*;
+import parser.AbinitInput;
 
 public class GUIEditor extends javax.swing.JFrame {
     
@@ -62,6 +63,8 @@ public class GUIEditor extends javax.swing.JFrame {
     private JSONArray jsonArray;
     private DatasetModel model;
     private ArrayList<HashMap<String,Object>> dataTable;
+    
+    private AbinitInput input = null;
     
     private String[] toHide = new String[]{"ndtset","spgroup","bravais","kptns","nelect",
                  "ntyppure","prtpmp","rprimd_orig", "rprimd","xclevel","ziontypat"};
@@ -92,46 +95,31 @@ public class GUIEditor extends javax.swing.JFrame {
     
     public void loadFile(String fileName)
     {
-        
+        dataTable.clear();
         this.fileName = fileName;
         
-        mf.printOUT("Loading JSON File "+fileName);
-        
-        BufferedReader br = null;
-        try {
-            br = new BufferedReader(new FileReader(fileName));
-            String s = br.readLine();
-            jsonArray = new JSONArray(s);
-            int length = jsonArray.length();
-            mf.printOUT("length = "+length);
-            String[] data = new String[length-1];
-            if(length == 2)
-            {
-                mf.printOUT("Only 1 dataset detected !");
-                data[0] = "1 Dataset";
-            }
-            else
-            {
-                mf.printOUT((length-1)+" datasets detected !");
-                for(int idtset = 1; idtset < length; idtset++)
-                {
+        input = new AbinitInput();
 
-                    JSONObject json = new JSONArray(s).getJSONObject(idtset);
-                    data[idtset-1] = "jdtset "+json.get("jdtset");
-                }
-            }
-            
-            dtsetList.setListData(data);
-            
-        } catch (IOException ex) {
-            Logger.getLogger(TestJSon.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                br.close();
-            } catch (IOException ex) {
-                Logger.getLogger(TestJSon.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        try{
+            input.readFromFile(fileName);
+        } catch(IOException e)
+        {
+            mf.printERR("Unable to parse fileName = "+fileName);
+            mf.printERR("Error = "+e.getMessage());
         }
+        
+        String[] data = null;
+        if(input.getNdtset() == 1 || input.getNdtset() == 0)
+        {
+            data = new String[1];
+            data[0] = "1";
+        }
+        else
+        {
+            data = input.getJdtsets().toArray(new String[0]);
+        }
+        
+        dtsetList.setListData(data);
         
         setVisible(true);
     }
@@ -273,9 +261,9 @@ public class GUIEditor extends javax.swing.JFrame {
 
     private void viewGeomButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewGeomButtonActionPerformed
 
-        int jdtset = dtsetList.getSelectedIndex();
+        String jdtset = (String)dtsetList.getSelectedValue();
         
-        if(jdtset == -1)
+        if(jdtset == null)
         {
             mf.printERR("First select a dataset !");
             return;
@@ -288,12 +276,22 @@ public class GUIEditor extends javax.swing.JFrame {
 
         try {
             AbinitGeometry geom = new AbinitGeometry();
-            JSONObject object = jsonArray.getJSONObject(dtsetList.getSelectedIndex()+1);
-            JSONObject objectdefault = jsonArray.getJSONObject(0);
             
-            geom.readFromJSON(object.getInt("natom"), object.getInt("ntypat"),
-                    object.getJSONArray("typat"), object.getJSONArray("znucl"), 
-                    object.getJSONArray("xred_orig"), object.getJSONArray("rprimd_orig"));
+            if(jdtset == null)
+            {
+                return;
+            }
+            HashMap<String,Object> values = null;
+            if(input.isUsejdtset())
+            {
+                values = input.getAllDatasets().get(jdtset);
+            }
+            else
+            {
+                values = input.getAllDatasets().get("0");
+            }
+            
+            geom.loadData(values);
 
             if (geom == null) {
                 mf.printERR("Geometry analyzer does not support multi-dataset files !");
@@ -319,32 +317,35 @@ public class GUIEditor extends javax.swing.JFrame {
 
     private void loadDatabase()
     {
-        JSONObject object = jsonArray.getJSONObject(dtsetList.getSelectedIndex()+1);
-        JSONObject objectdefault = jsonArray.getJSONObject(0);
-        
-        dataTable.clear();
-        TreeSet<String> listKeys = new TreeSet<String>();
-        Iterator<String> iter = object.keys();
-        while(iter.hasNext())
+        String jdtset = (String)dtsetList.getSelectedValue();
+        if(jdtset == null)
         {
-            String o = iter.next();
-            listKeys.add(o);
+            return;
+        }
+        HashMap<String,Object> values = null;
+        if(input.isUsejdtset())
+        {
+            values = input.getAllDatasets().get(jdtset);
+        }
+        else
+        {
+            values = input.getAllDatasets().get("0");
         }
         
-        iter = listKeys.iterator();
+        dataTable.clear();
+        
+        Iterator<String> iter = values.keySet().iterator();
         
         while(iter.hasNext())
         {
             String o = iter.next();
             
-            Object value = object.get(o);
+            Object value = values.get(o);
             
-            Object valDefault = objectdefault.get(o);
             HashMap<String,Object> map = new HashMap<String,Object>();
             
             map.put("name", o);
             map.put("value", value);
-            map.put("default", valDefault);
             
             dataTable.add(map);
         }
@@ -384,7 +385,7 @@ public class GUIEditor extends javax.swing.JFrame {
         @Override
         public int getColumnCount()
         {
-            return 3;
+            return 2;
         }
         
         @Override
@@ -398,10 +399,6 @@ public class GUIEditor extends javax.swing.JFrame {
             {
                 return "value";
             }
-            else if(col == 2)
-            {
-                return "default";
-            }
             return null;
         }
         
@@ -414,13 +411,33 @@ public class GUIEditor extends javax.swing.JFrame {
             }
             else if(column == 1)
             {
-                return dataTable.get(row).get("value");
+                Object o = dataTable.get(row).get("value");
+                StringBuilder sb = new StringBuilder();
+                if(o instanceof Number[])
+                {
+                    for(Number nb : (Number[])o)
+                    {
+                        sb.append(nb+" ");
+                    }
+                }
+                else if(o instanceof Number[][])
+                {
+                    for(Number[] nbs : (Number[][])o)
+                    {
+                        for(Number nb : nbs)
+                        {
+                            sb.append(nb).append(" ");
+                        }
+                        sb.append(";");
+                    }
+                }
+                else
+                {
+                    sb.append(o.toString());
+                }
+                
+                return sb.toString();
             }
-            else if(column == 2)
-            {
-                return dataTable.get(row).get("default");
-            }
-            
             return null;
         }
         
@@ -440,7 +457,8 @@ public class GUIEditor extends javax.swing.JFrame {
         @Override
         public boolean isCellEditable(int row, int column)
         {
-            return (column == 1); // Value of the variable
+//            return (column == 1); // Value of the variable
+            return false;
         }
         
         @Override

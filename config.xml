@@ -2,25 +2,24 @@
 <tabbedpaneconf>
   <configuration>
     <hostlocation lacation="Remote" />
-    <remotelogin login="tutoXX" />
-    <remotehost host="green.cism.ucl.ac.be" />
+    <remotelogin login="" />
+    <remotehost host="" />
     <remotepwd pwd="" />
     <keyRemote checked="0" />
     <keyFileRemote keyFile="" />
-    <gatewaylogin login="tutoXX" />
-    <gatewayhost host="hall.cism.ucl.ac.be" />
+    <gatewaylogin login="" />
+    <gatewayhost host="" />
     <gatewaypwd pwd="" />
     <keyGateway checked="0" />
     <keyFileGateway keyFile="" />
     <mySimulationspath path="./MySims" />
     <psppath path="./PSP" />
-    <abinitpath path="/home/users/y/g/ygillet/MAPR2451/bin" />
-    <abipypath path="/home/yannick/abinit/gmatteo-7.3.2-training/abipy-0.1.0-dev" />
+    <abinitpath path="" />
+    <abipypath path="" />
     <openfile file="./test2.in" />
-    <psp psp="2" />
+    <psp psp="1" />
     <psptable>
-      <entry i="0" symbol="O" psppath="./PSP/LDA_TM.psps/08" pspfile="8o.pspnc" psptype="LDA_TM" />
-      <entry i="1" symbol="H" psppath="./PSP/LDA_TM.psps/01" pspfile="1h.pspnc" psptype="LDA_TM" />
+      <entry i="0" symbol="Si" psppath="./PSP/LDA_TM.psps/14" pspfile="14si.pspnc" psptype="LDA_TM" />
     </psptable>
   </configuration>
   <inputfile />

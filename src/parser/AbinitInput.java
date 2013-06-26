@@ -74,33 +74,6 @@ public class AbinitInput
         return "Abinit Input : "+mapString;
     }
     
-    public static void main(String[] args)
-    {
-        String path = "/home/yannick/abinit/7.3.2-private/tests/v67mbpt/Input";
-          
-        File folder = new File(path);
-        
-        File[] listOfFiles = folder.listFiles(); 
-        
-        for(File f : listOfFiles)
-        {
-            String file = f.getAbsolutePath();
-            System.out.println("Parsing file : "+file);
-            AbinitInput input = new AbinitInput();
-        
-            try{
-                input.readFromFile(file);
-                System.out.println(input);
-
-            } catch(Exception e)
-            {
-                e.printStackTrace();
-            }
-        }
-        
-
-    }
-    
     private HashMap<String, String> tabularize(String content, AllInputVars allInputs) throws InvalidInputFileException
     {
         HashMap<String,String> newMap = new HashMap<>();

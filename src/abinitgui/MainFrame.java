@@ -127,11 +127,9 @@ public class MainFrame extends javax.swing.JFrame {
     private String curPath = "."; // to save current Path !
     private ProjectManager projectManager;
     private GUIEditor guiEditor;
-    private GUIEditorNew guiEditorNew;
     private AbinitInputVars abinitInputVars;
     private Simulation simulation;
     private SubmissionScriptFrame submitScriptFrame;
-    private InputEditor inputEditor;
     private final AllInputVars allInputVars;
 
     /**
@@ -279,19 +277,12 @@ public class MainFrame extends javax.swing.JFrame {
         simulation.setRemoteJob(remoteJob);
 
         guiEditor = new GUIEditor(this);
-        guiEditorNew = new GUIEditorNew(this);
         allInputVars = new AllInputVars(this);
         abinitInputVars = new AbinitInputVars(this, allInputVars);
 
-        inputEditor = new InputEditor(this);
         submitScriptFrame = new SubmissionScriptFrame(this);
-
-        testAnalyze.setVisible(false);
-        editPYDFT.setVisible(false);
         jMenuClustepAndTB.setVisible(false);
         localAbinitRadioButton.setVisible(true);
-        abipyPathPathLabel.setVisible(false);
-        abipyPathTextField.setVisible(false);
 
         useExtIFRadioButtonActionPerformed(null);
 
@@ -417,8 +408,6 @@ public class MainFrame extends javax.swing.JFrame {
         abinitPathTextField = new javax.swing.JTextField();
         abinitPathPathLabel = new javax.swing.JLabel();
         abinitPathButton = new javax.swing.JButton();
-        abipyPathPathLabel = new javax.swing.JLabel();
-        abipyPathTextField = new javax.swing.JTextField();
         inputFilePanel = new javax.swing.JPanel();
         useExtIFRadioButton = new javax.swing.JRadioButton();
         openFileTextField = new javax.swing.JTextField();
@@ -432,7 +421,6 @@ public class MainFrame extends javax.swing.JFrame {
         displayFileButton = new javax.swing.JButton();
         geditButton = new javax.swing.JButton();
         SubmissionEditButton1 = new javax.swing.JButton();
-        testAnalyze = new javax.swing.JButton();
         useCreIFRadioButton = new javax.swing.JRadioButton();
         openXMLFileLabel = new javax.swing.JLabel();
         openXMLFileTextField = new javax.swing.JTextField();
@@ -449,7 +437,6 @@ public class MainFrame extends javax.swing.JFrame {
         wavefuncAndDensButton = new javax.swing.JButton();
         inputOutputButton = new javax.swing.JButton();
         theoryButton = new javax.swing.JButton();
-        editPYDFT = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         otherTextArea = new javax.swing.JTextArea();
         emptyPanel = new javax.swing.JPanel();
@@ -539,7 +526,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        loginPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Remote Abinithost login", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 3, 14), java.awt.Color.darkGray)); // NOI18N
+        loginPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Remote Abinithost login", 0, 0, new java.awt.Font("Arial", 3, 14), java.awt.Color.darkGray)); // NOI18N
 
         hostLabel.setText("Hostname or IP");
 
@@ -602,7 +589,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        gatewayLoginPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Gateway login", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 3, 14), java.awt.Color.darkGray)); // NOI18N
+        gatewayLoginPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Gateway login", 0, 0, new java.awt.Font("Arial", 3, 14), java.awt.Color.darkGray)); // NOI18N
 
         hostBFELabel.setText("Hostname or IP");
 
@@ -696,20 +683,6 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        abipyPathPathLabel.setLabelFor(pspPathTextField);
-        abipyPathPathLabel.setText("Path to abipy (At abinit server !)");
-        abipyPathPathLabel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                abipyPathPathLabelMouseClicked(evt);
-            }
-        });
-
-        abipyPathTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                abipyPathTextFieldActionPerformed(evt);
-            }
-        });
-
         org.jdesktop.layout.GroupLayout configPanelLayout = new org.jdesktop.layout.GroupLayout(configPanel);
         configPanel.setLayout(configPanelLayout);
         configPanelLayout.setHorizontalGroup(
@@ -717,7 +690,6 @@ public class MainFrame extends javax.swing.JFrame {
             .add(configPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(configPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(abipyPathTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 508, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(whereIsAbinitLabel)
                     .add(configPanelLayout.createSequentialGroup()
                         .add(localAbinitRadioButton)
@@ -738,8 +710,7 @@ public class MainFrame extends javax.swing.JFrame {
                             .add(mySimulationsTextField)
                             .add(pspPathTextField))
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(abinitPathButton))
-                    .add(abipyPathPathLabel))
+                        .add(abinitPathButton)))
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         configPanelLayout.setVerticalGroup(
@@ -771,11 +742,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .add(configPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(abinitPathTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(abinitPathButton))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(abipyPathPathLabel)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(abipyPathTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .add(177, 177, 177))
         );
 
         mainTabbedPane.addTab("Configuration", configPanel);
@@ -853,13 +820,6 @@ public class MainFrame extends javax.swing.JFrame {
         SubmissionEditButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SubmissionEditButton1ActionPerformed(evt);
-            }
-        });
-
-        testAnalyze.setText("Test / Analyze file");
-        testAnalyze.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                testAnalyzeActionPerformed(evt);
             }
         });
 
@@ -964,13 +924,6 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        editPYDFT.setText("Edit input file");
-        editPYDFT.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editPYDFTActionPerformed(evt);
-            }
-        });
-
         org.jdesktop.layout.GroupLayout basicsPanelLayout = new org.jdesktop.layout.GroupLayout(basicsPanel);
         basicsPanel.setLayout(basicsPanelLayout);
         basicsPanelLayout.setHorizontalGroup(
@@ -985,10 +938,6 @@ public class MainFrame extends javax.swing.JFrame {
                     .add(inputOutputButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .add(theoryButton, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .add(basicsPanelLayout.createSequentialGroup()
-                .add(81, 81, 81)
-                .add(editPYDFT, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 141, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         basicsPanelLayout.setVerticalGroup(
             basicsPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -1005,9 +954,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .add(inputOutputButton)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(theoryButton)
-                .add(60, 60, 60)
-                .add(editPYDFT)
-                .addContainerGap())
+                .add(176, 176, 176))
         );
 
         basicsScrollPane.setViewportView(basicsPanel);
@@ -1029,7 +976,7 @@ public class MainFrame extends javax.swing.JFrame {
             emptyPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(emptyPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .add(jLabel4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
+                .add(jLabel4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
                 .addContainerGap())
         );
         emptyPanelLayout.setVerticalGroup(
@@ -1037,12 +984,12 @@ public class MainFrame extends javax.swing.JFrame {
             .add(emptyPanelLayout.createSequentialGroup()
                 .add(133, 133, 133)
                 .add(jLabel4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(189, Short.MAX_VALUE))
+                .addContainerGap(207, Short.MAX_VALUE))
         );
 
         inputFileTabbedPane.addTab("", emptyPanel);
 
-        testAnalyze1.setText("Test / Analyze file (NEW)");
+        testAnalyze1.setText("Test / Analyze file");
         testAnalyze1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 testAnalyze1ActionPerformed(evt);
@@ -1057,7 +1004,6 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .add(inputFilePanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                     .add(testAnalyze1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, testAnalyze, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .add(org.jdesktop.layout.GroupLayout.LEADING, SubmissionEditButton1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .add(org.jdesktop.layout.GroupLayout.LEADING, pspTableScrollPane, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .add(org.jdesktop.layout.GroupLayout.LEADING, sendSIMButton)
@@ -1136,8 +1082,6 @@ public class MainFrame extends javax.swing.JFrame {
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(sendSIMButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(testAnalyze)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(testAnalyze1)
                 .addContainerGap())
         );
@@ -1146,7 +1090,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         mainTabbedPane.addTab("Input File", inputFilePanel);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Scripts Library", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 3, 14), java.awt.Color.darkGray)); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Scripts Library", 0, 0, new java.awt.Font("Arial", 3, 14), java.awt.Color.darkGray)); // NOI18N
         jPanel1.setToolTipText("");
 
         scriptList.setModel(new javax.swing.AbstractListModel() {
@@ -1262,7 +1206,7 @@ public class MainFrame extends javax.swing.JFrame {
                         .add(12, 12, 12))
                     .add(jPanel1Layout.createSequentialGroup()
                         .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jScrollPane3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .add(jScrollPane3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE)
                             .add(jPanel1Layout.createSequentialGroup()
                                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                                     .add(jPanel1Layout.createSequentialGroup()
@@ -2780,268 +2724,10 @@ public class MainFrame extends javax.swing.JFrame {
         submitScriptFrame.setVisible(true);
     }//GEN-LAST:event_SubmissionEditButton1ActionPerformed
 
-    private void testAnalyzeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testAnalyzeActionPerformed
-
-        new Thread(
-                new Runnable() {
-                    public void run() {
-                        boolean localAbinitRadioButton_isSelected = localAbinitRadioButton.isSelected();
-                        boolean remoteGatewayRadioButton_isSelected = remoteGatewayRadioButton.isSelected();
-                        boolean remoteAbinitRadioButton_isSelected = remoteAbinitRadioButton.isSelected();
-
-                        String rootPath = mySimulationsTextField.getText();
-
-                        boolean useExtIFRadioButton_isSelected = useExtIFRadioButton.isSelected();
-
-                        String inputFile;
-
-                        if (useExtIFRadioButton_isSelected) {
-                            inputFile = openFileTextField.getText();
-                        } else {
-                            printERR("This option only works with external input files");
-                            sendSIMButton_setEnabled(true);
-                            return;
-                        }
-
-                        // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-                        if (localAbinitRadioButton_isSelected && Utils.osName().startsWith("Windows")) {
-                            printERR("Please connect to a remote host before pre-processing input files !");
-                            sendSIMButton_setEnabled(true);
-                            return;
-                        }
-
-                        if ((remoteGatewayRadioButton_isSelected
-                                || remoteAbinitRadioButton_isSelected) && remoteExec == null) {
-                            printERR("Please connect to a remote host before pre-processing input files !");
-                            sendSIMButton_setEnabled(true);
-                            return;
-                        }
-
-                        // Disabled since too long !
-                        createFiletree();
-
-                        String inputFolder = "input";
-
-                        // ********************************************************************************************************************************
-                        String cwd = "";
-
-                        String CMD = "pwd";
-
-                        RetMSG retmsg;
-                        if (remoteGatewayRadioButton_isSelected || remoteAbinitRadioButton_isSelected) {
-                            if (remoteExec != null) {
-                                retmsg = remoteExec.sendCommand(CMD);
-                                if (retmsg.getRetCode() == RetMSG.SUCCES) {
-                                    printOUT("PWD: " + retmsg.getRetMSG());
-                                    cwd = removeEndl(retmsg.getRetMSG());
-                                } else {
-                                    //printERR("Error (RetVal = " + retmsg.getRetCode() + "): " + retmsg.getRetMSG());
-                                    printERR("Error: " + retmsg.getRetMSG() + " !");
-                                }
-                            } else {
-                                printERR("First connect to an abinit host please !");
-                            }
-                        } else if (localAbinitRadioButton_isSelected) {
-                            if (localExec != null) {
-                                retmsg = localExec.sendCommand(CMD);
-                                if (retmsg.getRetCode() == RetMSG.SUCCES) {
-                                    printOUT("PWD: " + retmsg.getRetMSG());
-                                    cwd = removeEndl(retmsg.getRetMSG());
-                                } else {
-                                    //printERR("Error (RetVal = " + retmsg.getRetCode() + "): " + retmsg.getRetMSG());
-                                    printERR("Error: " + retmsg.getRetMSG() + " !");
-                                }
-                            }
-                        } else { // Le choix n'a pas été fait
-                            printERR("Choose a destination option please at config. tab !");
-                        }
-
-                        // ********************************************************************************************************************************
-
-                        String inputFileName = "";
-
-                        String pathToAbinit = abinitPathTextField.getText();
-
-                        inputFileName = Utils.getLastToken(inputFile.replace('\\', '/'), "/");
-
-                        // Test de l'existance de inputfile
-                        if (!Utils.exists(inputFile)) {
-                            printERR("The file " + inputFile + " doesn't exist !");
-                            sendSIMButton_setEnabled(true);
-                            return;
-                        }
-
-                        String simName = null;
-                        if (inputFileName != null) {
-                            int idx = inputFileName.indexOf('.');
-                            if (idx > 0 && idx < inputFileName.length()) {
-                                simName = inputFileName.substring(0, idx);
-                            } else {
-                                simName = inputFileName;
-                            }
-                        }
-
-                        if (!inputFile.equals("")) {
-                            // Envoie (copie) du fichier d'input
-                            String inputFileR = rootPath + "/" + inputFolder + "/" + inputFileName;
-                            putFile(inputFile + " " + inputFileR);
-                            
-                            // Envoi du script :> a faire en local plus tard !
-                            String scriptFile = "abinit2json.py";
-                            String scriptFileR = rootPath + "/" + inputFolder + "/" + scriptFile;
-                            putFile(scriptFile + " " + scriptFileR);
-
-                            // "PYTHONPATH=\""+abipyPathTextField.getText()+"\":$PYTHONPATH 
-                            String cmd = "python " + scriptFileR + " " + inputFileR;
-
-                            sendCommand(cmd);
-
-                            getFile(cwd + "/" + simName + ".in.json.txt" + " " + inputFile + ".json.txt");
-
-                            final Path out = FileSystems.getDefault().getPath(inputFile + ".json.txt");
-
-                            guiEditor.loadFile(out.toString());
-                        }
-
-                    }
-                }).start();
-    }//GEN-LAST:event_testAnalyzeActionPerformed
-
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
 
         abinitInputVars.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
-
-    private void editPYDFTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editPYDFTActionPerformed
-        new Thread(
-                new Runnable() {
-                    public void run() {
-                        boolean localAbinitRadioButton_isSelected = localAbinitRadioButton.isSelected();
-                        boolean remoteGatewayRadioButton_isSelected = remoteGatewayRadioButton.isSelected();
-                        boolean remoteAbinitRadioButton_isSelected = remoteAbinitRadioButton.isSelected();
-
-                        String rootPath = mySimulationsTextField.getText();
-
-                        boolean useExtIFRadioButton_isSelected = useExtIFRadioButton.isSelected();
-
-                        String inputFile;
-
-                        if (useExtIFRadioButton_isSelected) {
-                            inputFile = openFileTextField.getText();
-                        } else {
-                            printERR("Choose an option please ! (use an external"
-                                    + " inputfile or created a inputfile)");
-                            sendSIMButton_setEnabled(true);
-                            return;
-                        }
-
-                        // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-                        if (localAbinitRadioButton_isSelected && Utils.osName().startsWith("Windows")) {
-                            printERR("Please connect to a remote CLUSTEP host before submitting a simulation !");
-                            sendSIMButton_setEnabled(true);
-                            return;
-                        }
-
-                        if ((remoteGatewayRadioButton_isSelected
-                                || remoteAbinitRadioButton_isSelected) && remoteExec == null) {
-                            printERR("Please connect to a ABINIT host before submitting a simulation !");
-                            sendSIMButton_setEnabled(true);
-                            return;
-                        }
-
-                        // Disabled since too long !
-                        //createFiletree();
-
-                        String inputFolder = "input";
-                        String logfilesFolder = "logfiles";
-
-                        // ********************************************************************************************************************************
-                        String cwd = "";
-
-                        String CMD = "pwd";
-
-                        RetMSG retmsg;
-                        if (remoteGatewayRadioButton_isSelected || remoteAbinitRadioButton_isSelected) {
-                            if (remoteExec != null) {
-                                retmsg = remoteExec.sendCommand(CMD);
-                                if (retmsg.getRetCode() == RetMSG.SUCCES) {
-                                    printOUT("PWD: " + retmsg.getRetMSG());
-                                    cwd = removeEndl(retmsg.getRetMSG());
-                                } else {
-                                    //printERR("Error (RetVal = " + retmsg.getRetCode() + "): " + retmsg.getRetMSG());
-                                    printERR("Error: " + retmsg.getRetMSG() + " !");
-                                }
-                            } else {
-                                printERR("First connect to an abinit host please !");
-                            }
-                        } else if (localAbinitRadioButton_isSelected) {
-                            if (localExec != null) {
-                                retmsg = localExec.sendCommand(CMD);
-                                if (retmsg.getRetCode() == RetMSG.SUCCES) {
-                                    printOUT("PWD: " + retmsg.getRetMSG());
-                                    cwd = removeEndl(retmsg.getRetMSG());
-                                } else {
-                                    //printERR("Error (RetVal = " + retmsg.getRetCode() + "): " + retmsg.getRetMSG());
-                                    printERR("Error: " + retmsg.getRetMSG() + " !");
-                                }
-                            }
-                        } else { // Le choix n'a pas été fait
-                            printERR("Choose a destination option please at config. tab !");
-                        }
-
-                        // ********************************************************************************************************************************
-
-                        String inputFileName = "";
-
-                        String sep = Utils.fileSeparator();
-
-                        String pathToAbinit = abinitPathTextField.getText();
-
-                        inputFileName = Utils.getLastToken(inputFile.replace('\\', '/'), "/");
-
-                        // Test de l'existance de inputfile
-                        if (!Utils.exists(inputFile)) {
-                            printERR("The file " + inputFile + " doesn't exist !");
-                            sendSIMButton_setEnabled(true);
-                            return;
-                        }
-
-                        String simName = null;
-                        if (inputFileName != null) {
-                            int idx = inputFileName.indexOf('.');
-                            if (idx > 0 && idx < inputFileName.length()) {
-                                simName = inputFileName.substring(0, idx);
-                            } else {
-                                simName = inputFileName;
-                            }
-                        }
-
-                        if (!inputFile.equals("")) {
-                            // Envoie (copie) du fichier d'input
-                            String inputFileR = rootPath + "/" + inputFolder + "/" + inputFileName;
-                            putFile(inputFile + " " + inputFileR);
-                            
-                            // Envoi du script :> a faire en local plus tard !
-                            String scriptFile = "pydft_parser.py";
-                            String scriptFileR = rootPath + "/" + inputFolder + "/" + scriptFile;
-                            putFile(scriptFile + " " + scriptFileR);
-
-                            String cmd = "python " + scriptFileR + " " + inputFileR;
-
-                            sendCommand(cmd);
-
-                            getFile(cwd + "/" + simName + ".in.json.txt" + " " + inputFile + ".json.txt");
-
-                            String fileName = openFileTextField.getText();
-
-                            final Path out = FileSystems.getDefault().getPath(inputFile + ".json.txt");
-
-                            inputEditor.loadFile(out.toString());
-                        }
-
-                    }
-                }).start();
-    }//GEN-LAST:event_editPYDFTActionPerformed
 
     private void useCreIFRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_useCreIFRadioButtonActionPerformed
         useCreIFRadioButton.setForeground(Color.red);
@@ -3123,16 +2809,8 @@ public class MainFrame extends javax.swing.JFrame {
         showScripts();
     }//GEN-LAST:event_reloadScriptsActionPerformed
 
-    private void abipyPathPathLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_abipyPathPathLabelMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_abipyPathPathLabelMouseClicked
-
-    private void abipyPathTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abipyPathTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_abipyPathTextFieldActionPerformed
-
     private void testAnalyze1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testAnalyze1ActionPerformed
-        guiEditorNew.loadFile(openFileTextField.getText());
+        guiEditor.loadFile(openFileTextField.getText());
     }//GEN-LAST:event_testAnalyze1ActionPerformed
 
     public void sendCommand(String CMD) /*throws CMDException*/ {
@@ -3360,9 +3038,6 @@ public class MainFrame extends javax.swing.JFrame {
         tmpvar = abinitPathTextField.getText();
         conf.setAttr(congfiguration, "abinitpath", "path", tmpvar);
         //**********************************************************************
-        tmpvar = abipyPathTextField.getText();
-        conf.setAttr(congfiguration, "abipypath", "path", tmpvar);
-        //**********************************************************************
         tmpvar = openFileTextField.getText();
         conf.setAttr(congfiguration, "openfile", "file", tmpvar);
         //**********************************************************************
@@ -3498,8 +3173,6 @@ public class MainFrame extends javax.swing.JFrame {
                                 pspPathTextField.setText(attrValue);
                             } else if (elemName.equals("abinitpath")) {
                                 abinitPathTextField.setText(attrValue);
-                            } else if (elemName.equals("abipypath")) {
-                                abipyPathTextField.setText(attrValue);
                             } else if (elemName.equals("openfile")) {
                                 openFileTextField.setText(attrValue);
                             } else if (elemName.equals("psp")) {
@@ -3729,8 +3402,6 @@ public class MainFrame extends javax.swing.JFrame {
     javax.swing.JLabel abinitPathPathLabel;
     javax.swing.JTextField abinitPathTextField;
     javax.swing.ButtonGroup abinixbuttonGroup;
-    javax.swing.JLabel abipyPathPathLabel;
-    javax.swing.JTextField abipyPathTextField;
     javax.swing.JMenuItem aboutMenuItem;
     javax.swing.JButton algoAndConvButton;
     javax.swing.JPanel basicsPanel;
@@ -3740,7 +3411,6 @@ public class MainFrame extends javax.swing.JFrame {
     javax.swing.JToggleButton connectionToggleButton;
     javax.swing.JButton createButton;
     javax.swing.JButton displayFileButton;
-    javax.swing.JButton editPYDFT;
     javax.swing.JButton editScripts;
     javax.swing.JPanel emptyPanel;
     javax.swing.JMenu fileMenu;
@@ -3826,7 +3496,6 @@ public class MainFrame extends javax.swing.JFrame {
     javax.swing.JTextField scriptProgram;
     javax.swing.JScrollPane scriptScrollPane;
     javax.swing.JButton sendSIMButton;
-    javax.swing.JButton testAnalyze;
     javax.swing.JButton testAnalyze1;
     javax.swing.JButton theoryButton;
     javax.swing.JRadioButton useCreIFRadioButton;
