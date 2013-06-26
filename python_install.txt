@@ -1,0 +1,81 @@
+You will find in this file the different packages to install
+ in order to have the "post-processing" tools working on
+  Ubuntu 13.04 / Ubuntu 12.10
+  (Not yet tested on other systems)
+
+--------------------------------------------------------------
+
+Setup the environment of python for the GUI !
+
+1) Python 2.7
+
+(currently version 2.7.3)
+
+ if python is not installed yet, install it with the paquet manager
+
+  sudo apt-get install python2.7 python2.7-dev
+
+2) Install PIP (for dependencies)
+
+  sudo apt-get install python-pip
+
+2) Install numpy (1:1.6.1), scipy (0.9.0), matplotlib (1.1.1)
+
+  sudo apt-get install python-numpy python-scipy python-matplotlib
+
+ (Working with scipy 0.12 or scipy 0.9)
+ 
+ Some problems can be encountered with scipy 0.11. Try installing with pip :
+
+  sudo pip install scipy
+
+3) Install dependencies :
+
+For pymatgen
+
+  sudo pip install pyhull
+  sudo pip install pybtex (Install also pyYAML...)
+  sudo pip install PyCifRW
+  sudo pip install requests
+
+For abipy
+
+  sudo apt-get install libhdf5-serial-dev
+  sudo apt-get install libnetcdf-dev
+  sudo apt-get install python-netcdf
+  sudo pip install netCDF4
+
+3) Download pymatgen.tar.gz, abipy.tar.gz
+  from http://www.flavio.be website
+
+4) Untar them
+
+5) Create workdir :
+
+  mkdir -p $HOME/workdir/lib/python2.7/site-packages
+
+5) Add workdir to the .bashrc
+
+  echo “export PYTHONPATH=$HOME/workdir/lib/python2.7/site-packages/:$PYTHONPATH” >> ~/.bashrc
+
+5) Install pymatgen & abipy in workdir
+
+  cd pymatgen
+
+  python setup.py install --prefix=$HOME/workdir
+
+  cd abipy
+
+  python setup.py install --prefix=$HOME/workdir
+
+6) Setup configuration file $HOME/.abinit/abipy/abipyrc (create an empty file if you don't want to use more from abipy)
+
+7) Remove first line of bashrc, which prevents the execution of bashrc when not run interactively …
+
+----------------------------------
+# If not running interactively, don't do anything
+# [ -z "$PS1" ] && return
+-----------------------------------
+
+
+To make the sources, run “ant standalone” with jdk (openjdk-7-jdk) on my test-machine.
