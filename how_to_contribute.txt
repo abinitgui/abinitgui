@@ -1,7 +1,7 @@
 In order to contribute to Abipy, you should fork a new branch.
 
-When you are happy with the modifications and that they are well tested, you can ask for a pull request to the develop branch.
+When you are happy with the modifications and that they are well tested, you can ask for a pull request to master branch.
 
-Your branch will then be merged in the development branch after the check of the administrator.
+Your branch will then be merged in the branch after the check of the administrator.
 
-Finally, when changes will be stable with time, a release version will be merged in the master branch, considered as stable.
+Finally, when changes will be stable with time, a release version will be merged in the "stable" branch, considered as stable.
