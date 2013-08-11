@@ -6,16 +6,16 @@ import argparse;
 
 def bsanddos(inputDos,inputBand,outputDos,outputBand,outputBoth,titleBS,titleDOS,show):
 
-    ebands = abipy.ebands.ElectronBands.from_ncfile(inputBand)
-    ebandsDos = abipy.ebands.ElectronBands.from_ncfile(inputDos)
+    ebands = abipy.ebands.ElectronBands.from_file(inputBand)
+    ebandsDos = abipy.ebands.ElectronBands.from_file(inputDos)
 
-    dos = ebandsDos.get_dos();
+    dos = ebandsDos.get_edos();
 
     fig=dos.plot(title=titleDOS,show=show,savefig=outputBand)
 
-    fig=ebands.plot(title=titleBS,show=show,savefig=outputDos,klabels={(0.0,0.0,0.0) : "$\Gamma$", (0.5,0.0,0.0) : "L", (0.5,0.25,0.0) : "B", (0.5,0.5,0.0) : "X"})
+    fig=ebands.plot(title=titleBS,show=show,savefig=outputDos)
 
-    fig=ebands.plot_with_dos(dos,savefig=outputBoth,show=show,klabels={(0.0,0.0,0.0) : "$\Gamma$", (0.5,0.0,0.0) : "L"});
+    fig=ebands.plot_with_dos(dos,savefig=outputBoth,show=show)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

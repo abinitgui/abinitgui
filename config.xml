@@ -15,7 +15,6 @@
     <mySimulationspath path="./MySims" />
     <psppath path="./PSP" />
     <abinitpath path="" />
-    <abipypath path="" />
     <openfile file="./test2.in" />
     <psp psp="1" />
     <psptable>

@@ -6,7 +6,7 @@ import abipy;
 
 def bandstructure(inputFile,outputFile,title,show):
 
-    ebands = abipy.ebands.ElectronBands.from_ncfile(inputFile)
+    ebands = abipy.ebands.ElectronBands.from_file(inputFile)
     klabels = {(0.0,0.0,0.0) : "$\Gamma$", (0.5,0.0,0.0) : "L", (0.5,0.5,0.0) : "X", (0.25,0.25,0.0) : "Y"}
    
     fig = ebands.plot(title=title,klabels=klabels,show=show,savefig=outputFile)

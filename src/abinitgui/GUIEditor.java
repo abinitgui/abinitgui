@@ -106,17 +106,19 @@ public class GUIEditor extends javax.swing.JFrame {
         {
             mf.printERR("Unable to parse fileName = "+fileName);
             mf.printERR("Error = "+e.getMessage());
+            return;
         }
         
-        String[] data = null;
+        Integer[] data = null;
         if(input.getNdtset() == 1 || input.getNdtset() == 0)
         {
-            data = new String[1];
-            data[0] = "1";
+            data = new Integer[1];
+            data[0] = 1;
         }
         else
         {
-            data = input.getJdtsets().toArray(new String[0]);
+            int ndtset = input.getNdtset();
+            data = input.getJdtsets().toArray(new Integer[0]);
         }
         
         dtsetList.setListData(data);
@@ -261,7 +263,7 @@ public class GUIEditor extends javax.swing.JFrame {
 
     private void viewGeomButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewGeomButtonActionPerformed
 
-        String jdtset = (String)dtsetList.getSelectedValue();
+        Integer jdtset = (Integer)dtsetList.getSelectedValue();
         
         if(jdtset == null)
         {
@@ -288,13 +290,13 @@ public class GUIEditor extends javax.swing.JFrame {
             }
             else
             {
-                values = input.getAllDatasets().get("0");
+                values = input.getAllDatasets().get(0);
             }
             
             geom.loadData(values);
 
             if (geom == null) {
-                mf.printERR("Geometry analyzer does not support multi-dataset files !");
+                mf.printERR("Unable to load data from the parser !");
             } else {
                 geom.fillData();
 
@@ -317,7 +319,7 @@ public class GUIEditor extends javax.swing.JFrame {
 
     private void loadDatabase()
     {
-        String jdtset = (String)dtsetList.getSelectedValue();
+        Integer jdtset = (Integer)dtsetList.getSelectedValue();
         if(jdtset == null)
         {
             return;
@@ -329,7 +331,7 @@ public class GUIEditor extends javax.swing.JFrame {
         }
         else
         {
-            values = input.getAllDatasets().get("0");
+            values = input.getAllDatasets().get(0);
         }
         
         dataTable.clear();

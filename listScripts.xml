@@ -39,7 +39,7 @@
             <name name="inputFile" />
             <type type="file" />
             <help help="The fileName which will be read" />
-            <default default="./MySims/wholedata/test3/test3o_DS2_WFK_0-etsf.nc" />
+            <default default="./MySims/wholedata/test3/test3o_DS1_WFK_0-etsf.nc" />
         </input>
         <input>
             <name name="show" />
@@ -63,13 +63,13 @@
             <name name="step" />
             <type type="number" />
             <help help="Defines the sampling of the energies" />
-            <default default="0.002" />
+            <default default="0.2" />
         </input>
         <input>
 	    <name name="width" />
             <type type="number" />
             <help help="Width of the gaussians" />
-            <default default="0.01" />
+            <default default="0.3" />
         </input>
         <output>
             <name name="outputFile" />
@@ -87,7 +87,7 @@
             <name name="inputDos" />
             <type type="file" />
             <help help="The WFK file used to compute the DOS" />
-            <default default="./MySims/wholedata/test3/test3o_DS2_WFK_0-etsf.nc" />
+            <default default="./MySims/wholedata/test3/test3o_DS1_WFK_0-etsf.nc" />
         </input>	
         <input>
             <name name="inputBand" />
